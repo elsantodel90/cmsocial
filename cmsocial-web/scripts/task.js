@@ -152,12 +152,12 @@ angular.module('cmsocial')
       return $rootScope.submissions[name] !== undefined
           && $rootScope.submissions[name].length > 0;
     };
-    var aceModeMap = {"C": "c_cpp", "C++": "c_cpp", "Pascal": "pascal"}
-    var langExtMap = {"C": ".c", "C++": ".cpp", "Pascal": ".pas"}
-    $scope.languages = ["C", "C++", "Pascal"];
+    var aceModeMap = {"C": "c_cpp", "C++": "c_cpp", "Pascal": "pascal", "Python 3": "python"}
+    var langExtMap = {"C": ".c", "C++": ".cpp", "Pascal": ".pas", "Python 3": ".py"}
+    $scope.languages = ["C", "C++", "Pascal", "Python 3"];
 
     if (!localStorage.getItem("preferred_language")) {
-      localStorage.setItem("preferred_language", "C++")
+      localStorage.setItem("preferred_language", "Python 3")
     }
 
     $scope.language = localStorage.getItem("preferred_language")
