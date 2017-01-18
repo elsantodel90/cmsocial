@@ -1,0 +1,145 @@
+LOG OF STEPS:
+    -> Installed xubuntu 16.04 32 bits version
+    -> sudo apt-get update
+    -> sudo apt-get dist-upgrade
+    -> sudo apt-get install git
+    -> git clone https://github.com/algorithm-ninja/cmsocial.git
+    -> git checkout develop
+    -> Download cms dependencies (I started with 1.2 version, in the end I installed all the dependencies of both after realizing the 1.3 difference)
+       
+        CMS 1.3:
+         sudo apt-get install build-essential fpc postgresql postgresql-client \
+            gettext python2.7 iso-codes shared-mime-info stl-manual cgroup-lite
+           
+        // I had to manually add these in order for some stuff to compile without errors. But maybe that was before I realized I should install 1.3 dependencies...
+            postgresql-server-dev-all libcups2-dev
+        
+    -> Create postgres database
+        sudo su - postgres
+        createuser oiajuez -P     [password oiapass]
+        createdb -O oiajuez database
+        psql database -c 'ALTER SCHEMA public OWNER TO oiajuez'
+        psql database -c 'GRANT SELECT ON pg_largeobject TO oiajuez'
+        exit
+    -> sudo apt-get install python-pip
+    -> sudo pip install --upgrade pip
+    -> sudo pip install --upgrade -r requirements.txt [Note that CMS is downloaded into ./src]
+            ---> It is probably best to remove cms from requirements, and instead install it separately.
+                  Quoting Luca:
+                    "Uhm, I'm quite sure that I'm using a version of cms where there is no need to specify a contest for ES - the relevant patch was merged in upstream CMS at the end of august 2016 I think"
+            ---> Makesure the sqlalchemy in requirements.txt is the one installed [A mi me instalo una mas nueva? Seguro es por instalar las de ubuntu!]
+                   If it must be fixed:
+                        sudo pip install sqlalchemy==0.9.10
+    -> sudo apt-get install npm
+    -> sudo apt-get install nodejs-legacy
+    -> make
+    -> sudo python2 ./setup.py install
+    -> cp config/cmsocial.ini.sample config/cmsocial.ini
+    -> sudo cp config/cmsocial.ini /usr/local/etc/cmsocial.ini
+   
+    INSTALL THE AUTOMATICALLY DOWNLOADED VERSION OF CMS
+    -> sudo chown -R cms src
+    -> cp src/cms/config/cms.conf.sample src/cms/config/cms.conf
+    -> Edit src/cms/config/cms.conf:
+        "Add service PracticeWebServer to /usr/local/etc/cms.conf in core_services section." [Actually replaced ContestWebServer]
+        Database connection line: postgresql+psycopg2://oiajuez:oiapass@localhost/database
+    -> Install combo:
+        cd src/cms
+        sudo pip install --upgrade -r requirements.txt
+        sudo ./setup.py install
+    -> sudo cp src/cms/config/cms.conf /usr/local/etc/cms.conf
+    -> sudo usermod -a -G cmsuser cms
+    -> Log out and login
+    -> sudo mkdir -p /var/local/log/cms     [trying to get rid of some errors... probably because of not running prerequisites.py]
+    -> sudo chmod a+rwx /var/local/log/cms/ [trying to get rid of some errors... probably because of not running prerequisites.py]
+    -> After all this, I discovered and run (after fixing!) the prerequisites.py script.
+   
+    -> cmsInitDB
+    -> python2 -c "import cmsocial.db; from cms.db import metadata; metadata.create_all()"
+    -> psql oiajuez -h 127.0.0.1 -d database < sql_scripts/create_triggers.sql
+    -> CAMBIAR el de  sql_updaters multicontest a que termine en COMMIT
+    -> python2 -c "import cmsocial.db; from cms.db import metadata; metadata.create_all()"
+    -> psql oiajuez -h 127.0.0.1 -d database < sql_updaters/multicontest.sql [THIS STEPS FAILS!]
+   
+    => Create an admin user: cmsAddAdmin -p pass user
+
+    -> Practise webserver is accesed at localhost:18888/contestName/
+            ---> That last / is super important and cannot be ommited.
+
+
+
+
+
+
+
+
+
+
+
+
+######################################################################
+######################################################################
+####### ESENCIALMENTE OTSOLETO: INSTRUCCIONES PREVIAS QUE NO VAN  ####
+######################################################################
+######################################################################
+
+"Readme" del proyecto  cmsocial
+https://github.com/algorithm-ninja/cmsocial/tree/develop#cmsocial
+
+sudo aptitude install npm node
+
+Actualizar node a una version nueva: (Ubuntu trae una vieja)
+sudo npm cache clean -f
+sudo npm install -g n
+sudo n stable
+
+Actualizar npm a una version nueva?
+npm update -g npm
+
+---> El proyecto de angular de cmsocial
+    sudo npm install -g grunt-cli bower yo generator-karma generator-angular
+
+
+Nota: Siempre que querramos correr un servicio de cms, usamos algo de la pinta
+    export CMS_CONFIG=archivo-de-configuracion-a-usar; cmsResourceService -a
+para asi poder especificar el config-file. Esto ya esta automatizado en ./cmsRun.sh, ejemplo:
+    ./cmsRun.sh cmsResourceService -a
+
+
+=> Es buena idea primero que nada instalar las dependencias de *ubuntu* de cms, por las dudas
+	http://cms.readthedocs.io/en/v1.2/Installation.html
+=> Crear un virtualenv para todo esto. 
+	(En produccion con un server completamente dedicado, uno podria instalar todo globalmente sin demasiado problema) 
+	(  http://docs.python-guide.org/en/latest/dev/virtualenvs/  )
+	mkvirtualenv oia-juez
+=> Trabajar siempre en ese virtualenv (workon oia-juez)
+=> Actualizar pip. Es buena costumbre siempre que creamos un nuevo virtualenv.
+	pip install --upgrade pip
+=> Instalar los requirements de python:
+	pip install -r requirements.txt
+	Fijarse si tira errores. Por ejemplo tener en cuenta si salta algo con:
+		http://stackoverflow.com/questions/29134512/insecureplatformwarning-a-true-sslcontext-object-is-not-available-this-prevent
+	   (Yo probe con pip install --upgrade pyopenssl ndg-httpsclient pyasn1)
+	O por ejemplo, para que me compilen los requirements sin error tuve que instalar este paquetito (que tiene cups.h):
+		sudo aptitude install libcups2-dev
+=> Al instalar el anterior, se baja un repo del cms, con su requirements.txt. Instalar ese! [QUIZAS NO HACE FALTA SI INSTALAMOS PRIMERO LAS DEPENDENCIAS?]
+=> Correr python setup.py build
+=> Correr python setup.py install 
+=> oia-config/cms.conf.sample contiene la configuracion del sistema. Minimamente ahi se configura:
+	--> El password de la db de postgresql
+	--> La secret_key
+    --> Puertos a usar
+=> Crear la base de datos como explica en http://cms.readthedocs.io/en/v1.2/Running%20CMS.html
+	sudo su - postgres
+	createuser oia-juez-user -P
+	[ACA NOS PIDE PASSWORD]
+	createdb -O oia-juez-user oia-juez-db
+	psql oia-juez-db -c 'ALTER SCHEMA public OWNER TO "oia-juez-user"'
+	psql oia-juez-db -c 'GRANT SELECT ON pg_largeobject TO "oia-juez-user"'
+=> Inicializar la base de datos creada anteriormente:
+	./cmsRun.sh cmsInitDB
+    export CMS_CONFIG=oia-config/cms.conf.sample; python2 -c "import cmsocial.db; from cms.db import metadata; metadata.create_all()"
+    psql oia-juez-user -h 127.0.0.1 -d oia-juez-db < sql_scripts/create_triggers.sql
+=> Crear un usuario admin: ./cmsRun.sh cmsAddAdmin -p passwordUsuarioAdmin nombreUsuarioAdmin
+=> Crear un link en al cmsocial.ini (hay un path hardcodeado a un lugar horrible) [Si no usamos ningun virtualenv e instalamos posta, tocar el archivo de una? Mejor link igual]
+        sudo ln -s /home/santo/repos/git/oia-juez/config/cmsocial.ini /usr/local/etc/
