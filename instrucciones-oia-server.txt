@@ -29,15 +29,18 @@ sudo pip install --upgrade -r requirements.txt
 	  Use "pip show sqlalchemy" To see which version is installed: If it must be fixed, use sudo pip install sqlalchemy==0.9.10                 
 sudo apt-get install npm
 sudo apt-get install nodejs-legacy
+# This is the part that oia-scripts/build.sh does.
 make
 sudo python2 ./setup.py install
 sudo rm -f /usr/local/etc/cmsocial.ini
 sudo ln -s "$(pwd)"/config/cmsocial.ini /usr/local/etc/cmsocial.ini
    
    
---> INSTALL CMS (Recommended: Most recent stable version IF IT IS AT LEAST 1.3, or, most recent from master branch https://github.com/cms-dev/cms) CMS WEBPAGE: http://cms-dev.github.io/
+--> INSTALL CMS (We should be careful with the selected version... Tested with that specific comit) CMS WEBPAGE: http://cms-dev.github.io/
 		
 git clone --recursive https://github.com/cms-dev/cms
+cd cms
+git checkout 664b893f97dca5fedaa00a39de7d89ae972e15da
 # At the CMS repository directory:
 sudo pip install -r requirements.txt
 sudo ./prerequisites.py install
@@ -53,7 +56,8 @@ cmsInitDB
 python2 -c "import cmsocial.db; from cms.db import metadata; metadata.create_all()"
 psql oiajuez -h 127.0.0.1 -d database < sql_scripts/create_triggers.sql
    
---> Create an admin user: cmsAddAdmin -p pass user
+--> Create an admin user:
+cmsAddAdmin -p pass user
 
 --> Practise webserver is accesed at localhost:18888/contestName/
             ---> That last / is super important and cannot be ommited.
