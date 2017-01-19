@@ -6,6 +6,7 @@
 if [[ "oia-scripts" != "${PWD##*/}" ]]
 then
     echo SE DEBE EJECUTAR "$0" DIRECTAMENTE DESDE EL DIRECTORIO oia-scripts QUE LO CONTIENE
+    exit
 fi
 
 cd ..    
