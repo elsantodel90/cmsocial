@@ -322,6 +322,10 @@ angular.module('cmsocial')
       it: 'Problemi per categoria',
       es: 'Problemas por categoría'
     },
+    'Contests': {
+      it: 'Problemi per concorso',
+      es: 'Problemas por certamen'
+    },
     'Quizzes': {
       it: 'Selezioni scolastiche',
       es: 'Quizzes'
