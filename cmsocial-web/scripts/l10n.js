@@ -21,42 +21,53 @@ angular.module('cmsocial')
   .constant('words', {
     // User interface
     'Close': {
-      it: 'Chiudi'
+      it: 'Chiudi',
+      es: 'Cerrar'
     },
     'Submit': {
-      it: 'Invia'
+      it: 'Invia',
+      es: 'Enviar'
     },
     'Run': {
-      it: 'Esegui'
+      it: 'Esegui',
+      es: 'Ejecutar'
     },
     'Load file': {
-      it: 'Carica file'
+      it: 'Carica file',
+      es: 'Cargar archivo'
     },
     'Reset': {
-      it: 'Resetta'
+      it: 'Resetta',
+      es: 'Reiniciar'
     },
     'Apply': {
-      it: 'Applica'
+      it: 'Applica',
+      es: 'Aplicar'
     },
     'Update': {
-      it: 'Aggiorna'
+      it: 'Aggiorna',
+      es: 'Actualizar'
     },
     'Browse...': {
-      it: 'Sfoglia...'
+      it: 'Sfoglia...',
+      es: 'Explorar...'
     },
     'Changes recorded': {
-      it: 'Modifiche registrate'
+      it: 'Modifiche registrate',
+      es: 'Se han guardado las modificaciones'
     },
     'No changes recorded': {
-      it: 'Nessuna modifica registrata'
+      it: 'Nessuna modifica registrata',
+      es: 'No se ha guardado ninguna modificación'
     },
     'Leave empty if you don\'t want to change your password': {
-      it: 'Lascia questo campo vuoto se non vuoi cambiare la password'
+      it: 'Lascia questo campo vuoto se non vuoi cambiare la password',
+      es: 'Dejar este campo en blanco si no desea cambiar el password'
     },
     'MiB': // mebibyte
     {},
     'sec': // abbreviation of: seconds
-    {},
+    {es : 'seg'},
 
     // Overview page
     'Italian Olympiads in Informatics training website': {
@@ -66,22 +77,28 @@ angular.module('cmsocial')
       it: 'Benvenuto nella piattaforma ufficiale di allenamento per le OII! Qui avrai accesso a numerosi problemi ai quali potrai inviare delle soluzioni scritte in C, C++ o Pascal.'
     },
     'Learn to code': {
-      it: 'Impara a programmare'
+      it: 'Impara a programmare',
+      es: 'Aprender a programar'
     },
     'Tasks archive': {
-      it: 'Archivio dei problemi'
+      it: 'Archivio dei problemi',
+      es: 'Archivo de problemas'
     },
     'Advance your ranking': {
-      it: 'Scala la classifica'
+      it: 'Scala la classifica',
+      es: 'Mejore su ranking'
     },
     'See the rankings': {
-      it: 'Guarda la classifica'
+      it: 'Guarda la classifica',
+      es: 'Ver los rankings'
     },
     'Get to know other coders': {
-      it: 'Partecipa alla community'
+      it: 'Partecipa alla community',
+      es: 'Conozca a otros programadores'
     },
     'Go to the forum': {
-      it: 'Visita il forum'
+      it: 'Visita il forum',
+      es: 'Visite el foro'
     },
     'The wide range of tasks available on this website will allow you to start from the easiest going to the toughest one: in this way you\'ll improve your programming abilities and your attitude to analyze and deal with hard computational problems!': {
       it: 'La vasta scelta di problemi presenti nel sito ti permette di partire da quelli più facili fino ad arrivare a quelli più difficili: in questo modo migliorerai sempre più le tue abilità di programmazione e la tua capacità di analizzare ed affrontare problemi computazionali!'
@@ -95,400 +112,531 @@ angular.module('cmsocial')
 
     // Task page
     'Statement': {
-      it: 'Testo'
+      it: 'Testo',
+      es: 'Enunciado'
     },
     'Attachments': {
-      it: 'Allegati'
+      it: 'Allegati',
+      es: 'Adjuntos'
     },
     'Stats': {
-      it: 'Statistiche'
+      it: 'Statistiche',
+      es: 'Estadísticas'
     },
     'Submissions': {
-      it: 'Sottoposizioni'
+      it: 'Sottoposizioni',
+      es: 'Envíos'
     },
     'Memory limit': {
-      it: 'Limite di memoria'
+      it: 'Limite di memoria',
+      es: 'Límite de memoria'
     },
     'Time limit': {
-      it: 'Limite di tempo'
+      it: 'Limite di tempo',
+      es: 'Límite de tiempo'
     },
     'Tags': {
-      it: 'Tag'
+      it: 'Tag',
+      es: 'Etiquetas'
     },
     'Tags list': {
-      it: 'Elenco dei tag'
+      it: 'Elenco dei tag',
+      es: 'Lista de etiquetas'
     },
     'Memory available for the execution of one testcase, measured in MiB.': {
-      it: 'La quantità di memoria, in MiB, disponibile per l\'esecuzione di un testcase.'
+      it: 'La quantità di memoria, in MiB, disponibile per l\'esecuzione di un testcase.',
+      es: 'Cantidad de memoria disponible para la ejecución de un caso de prueba, medida en MiB'
     },
     'Time available for the execution of one testcase, measured in seconds.': {
-      it: 'La quantità di tempo, in secondi, disponibile per l\'esecuzione di un testcase.'
+      it: 'La quantità di tempo, in secondi, disponibile per l\'esecuzione di un testcase.',
+      es: 'Tiempo disponible para la ejecución de un caso de prueba, medida en MiB'
     },
     'Tags are useful to classify tasks by a common characteristic or technique, such as: <i>greedy</i>, <i>graphs</i>, and so on.': {
-      it: 'I tag servono per classificare e raggruppare i problemi in base ad una caratteristica comune, ad esempio: <i>greedy</i>, <i>grafi</i>, e così via.'
+      it: 'I tag servono per classificare e raggruppare i problemi in base ad una caratteristica comune, ad esempio: <i>greedy</i>, <i>grafi</i>, e così via.',
+      es: 'Las etiquetas son útiles para clasificar los problemas por técnica o característica, como por ejemplo: <i>goloso</i>, <i>grafos</i>, etc.'
     },
     'Tag already exists': {
-      it: 'Il tag esiste già'
+      it: 'Il tag esiste già',
+      es: 'La etiqueta ya existe'
     },
     'Tag does not exist': {
-      it: 'Tag inesistente'
+      it: 'Tag inesistente',
+      es: 'La etiqueta no existe'
     },
     'Task does not exist': {
-      it: 'Problema inesistente'
+      it: 'Problema inesistente',
+      es: 'Problema inexistente'
     },
     'The task already has this tag': {
-      it: 'Il problema ha già questo tag'
+      it: 'Il problema ha già questo tag',
+      es: 'El problema ya tiene esta etiqueta'
     },
     'Task does not have tag': {
-      it: 'Il problema non ha tag'
+      it: 'Il problema non ha tag',
+      es: 'El problema no tiene etiqueta'
     },
     'Task correctly tagged': {
-      it: 'Tag aggiunto correttamente al problema'
+      it: 'Tag aggiunto correttamente al problema',
+      es: 'Problema etiquetado correctamente'
     },
     'Task correctly untagged': {
-      it: 'Tag rimosso correttamente dal problema'
+      it: 'Tag rimosso correttamente dal problema',
+      es: 'La etiqueta ha sido correctamente removida del problema'
     },
 
     // Submissions page
     'Submit a solution': {
-      it: 'Invia una sottoposizione'
+      it: 'Invia una sottoposizione',
+      es: 'Enviar una solución'
     },
     'Language:': {
-      it: 'Linguaggio:'
+      it: 'Linguaggio:',
+      es: 'Lenguaje'
     },
     'Write your code here': {
-      it: 'Scrivi qui il tuo codice'
+      it: 'Scrivi qui il tuo codice',
+      es: 'Escriba aquí su código'
     },
     'Previous submissions': {
-      it: 'Sottoposizioni precedenti'
+      it: 'Sottoposizioni precedenti',
+      es: 'Envíos previos'
     },
     'ID': {},
     'Time and date': {
-      it: 'Data e ora'
+      it: 'Data e ora',
+      es: 'Fecha y hora'
     },
     'Status': {
-      it: 'Stato'
+      it: 'Stato',
+      es: 'Estado'
     },
     'File(s)': {
-      it: 'File'
+      it: 'File',
+      es: 'Archivo'
     },
     'Submission details': {
-      it: 'Dettagli della sottoposizione'
+      it: 'Dettagli della sottoposizione',
+      es: 'Detalles del envío'
     },
     'Compilation output': {
-      it: 'Output della compilazione'
+      it: 'Output della compilazione',
+      es: 'Salida del compilador'
     },
     'Compilation outcome:': {
-      it: 'Esito della compilazione:'
+      it: 'Esito della compilazione:',
+      es: 'Resultado de la compilación'
     },
     'Compilation time:': {
-      it: 'Tempo di compilazione:'
+      it: 'Tempo di compilazione:',
+      es: 'Tiempo de compilación'
     },
     'Used memory:': {
-      it: 'Memoria utilizzata:'
+      it: 'Memoria utilizzata:',
+      es: 'Memoria utilizada'
     },
-    'Standard output': {},
-    'Standard error': {},
-    'Subtask': {},
-    'Testcase': {},
+    'Standard output': {es: 'Salida estándar'},
+    'Standard error': {es: 'Salida de error estándar'},
+    'Subtask': {es: 'Subtarea'},
+    'Testcase': {es: 'Caso de prueba'},
     'Result': {
-      it: 'Risultato'
+      it: 'Risultato',
+      es: 'Resultado'
     },
     'Details': {
-      it: 'Dettagli'
+      it: 'Dettagli',
+      es: 'Detalles'
     },
     'Time': {
-      it: 'Tempo'
+      it: 'Tempo',
+      es: 'Tiempo'
     },
     'Memory': {
-      it: 'Memoria'
+      it: 'Memoria',
+      es: 'Memoria'
     },
     'Too frequent submissions!': {
-      it: 'Sottoposizioni troppo frequenti!'
+      it: 'Sottoposizioni troppo frequenti!',
+      es: '¡Envíos demasiado frecuentes!'
     },
     'You have a pending submission': {
-      it: 'Hai una sottoposizione in sospeso'
+      it: 'Hai una sottoposizione in sospeso',
+      es: 'Tienes un envío pendiente'
     },
     'Some files are missing!': {
-      it: 'Mancano alcuni file!'
+      it: 'Mancano alcuni file!',
+      es: 'Tienes un envío pendiente'
     },
     'The files you sent are too big!': {
-      it: 'I file inviati sono troppo grandi!'
+      it: 'I file inviati sono troppo grandi!',
+      es: '¡Los archivos enviados son demasiado grandes!'
     },
     'The language of the files you sent is not recognized!': {
-      it: 'Linguaggio dei file inviati non riconosciuto!'
+      it: 'Linguaggio dei file inviati non riconosciuto!',
+      es: '¡No se reconoce el lenguaje de los archivos enviados!'
     },
     'The files you sent are in different languages!': {
-      it: 'I file inviati sono in linguaggi diversi!'
+      it: 'I file inviati sono in linguaggi diversi!',
+      es: '¡Los archivos enviados están en lenguajes diferentes!'
     },
     'Invalid archive!': {
-      it: 'Archivio non valido!'
+      it: 'Archivio non valido!',
+      es: '¡Archivo inválido!'
     },
 
     // Stats page
     'Number of people who solved it:': {
-      it: 'Numero di persone che l\'hanno risolto:'
+      it: 'Numero di persone che l\'hanno risolto:',
+      es: 'Cantidad de usuarios que lo resolvieron:'
     },
     'Number of people who tried it:': {
-      it: 'Numero di persone che l\'hanno provato:'
+      it: 'Numero di persone che l\'hanno provato:',
+      es: 'Cantidad de usuarios que lo intentaron:'
     },
     'Number of correct submissions:': {
-      it: 'Numero di soluzioni corrette:'
+      it: 'Numero di soluzioni corrette:',
+      es: 'Cantidad de envíos correctos:'
     },
     'Number of solutions submitted:': {
-      it: 'Numero di soluzioni inviate:'
+      it: 'Numero di soluzioni inviate:',
+      es: 'Cantidad de envíos:'
     },
     'Users with the best solutions': {
-      it: 'Utenti con le soluzioni migliori'
+      it: 'Utenti con le soluzioni migliori',
+      es: 'Usuarios con las mejores soluciones:'
     },
 
     // Navbar buttons
     'Task & quiz archive': {
-      it: 'Archivio problemi e quiz'
+      it: 'Archivio problemi e quiz',
+      es: 'Archivo de enunciados'
     },
     'All tasks': {
-      it: 'Tutti i problemi'
+      it: 'Tutti i problemi',
+      es: 'Todos los problemas'
     },
     'Lessons': {
-      it: 'Lezioni'
+      it: 'Lezioni',
+      es: 'Lecciones'
     },
     'Task categories': {
-      it: 'Problemi per categoria'
+      it: 'Problemi per categoria',
+      es: 'Problemas por categoría'
     },
     'Quizzes': {
-      it: 'Selezioni scolastiche'
+      it: 'Selezioni scolastiche',
+      es: 'Quizzes'
     },
     'Ranking': {
-      it: 'Classifica'
+      it: 'Classifica',
+      es: 'Ranking'
     },
-    'Forum': {},
+    'Forum': {es : 'Foros'},
 
     // User related
     'Sign up': {
-      it: 'Registrati'
+      it: 'Registrati',
+      es: 'Registrarse'
     },
     'Log in': {
-      it: 'Entra'
+      it: 'Entra',
+      es: 'Entrar'
     },
     'Log out': {
-      it: 'Esci'
+      it: 'Esci',
+      es: 'Salir'
     },
     'Forgot account?':
-    {it: 'Hai dimenticato le credenziali?'},
+    {it: 'Hai dimenticato le credenziali?',
+	 es: '¿Ha olvidado su cuenta?'},
     'No such user':
-    {it: 'Utente inesistente'},
+    {it: 'Utente inesistente',
+	 es: 'Usuario inexistente'},
     'A code was sent, check your inbox':
-    {it: 'Il codice è stato spedito, controlla la casella di posta'},
+    {it: 'Il codice è stato spedito, controlla la casella di posta',
+	 es: 'Se le ha enviado un código, por favor revise su bandeja de entrada'},
     'You should already have received an email, if not, try tomorrow':
-    {it: 'Dovresti aver già ricevuto una mail, altrimenti riprova domani'},
+    {it: 'Dovresti aver già ricevuto una mail, altrimenti riprova domani',
+	 es: 'Ya debería haber recibido un email, de no ser así, intente mañana'},
     'Your new password was mailed to you':
-    {it: 'La nuova password ti è stata mandata per mail'},
+    {it: 'La nuova password ti è stata mandata per mail',
+	 es: 'Se le ha enviado un email con el nuevo password'},
     'Wrong code':
-    {it: 'Codice errato'},
+    {it: 'Codice errato',
+	 es: 'Código erróneo'},
     'Recover data':
-    {it: 'Recupera credenziali'},
+    {it: 'Recupera credenziali',
+	 es: 'Recuperar los datos'},
     'Confirm code':
-    {it: 'Conferma codice'},
+    {it: 'Conferma codice',
+	 es: 'Código de confirmación'},
     'Code':
-    {it: 'Codice'},
+    {it: 'Codice', es : 'Código'},
     'My user profile': {
-      it: 'Il mio profilo utente'
+      it: 'Il mio profilo utente',
+      es : 'Mi perfil de usuario'
     },
     'Login data': {
-      it: 'Dati di accesso al sito'
+      it: 'Dati di accesso al sito',
+      es : 'Datos de acceso al sitio'
     },
-    'Username': {},
+    'Username': {es : 'Nombre de usuario'},
     'Password': {},
     'Confirm password': {
-      it: 'Ripeti password'
+      it: 'Ripeti password',
+      es: 'Confirme el password'
     },
     'Personal data': {
-      it: 'Dati personali'
+      it: 'Dati personali',
+      es: 'Datos personales'
     },
     'First name': {
-      it: 'Nome'
+      it: 'Nome',
+      es: 'Nombre'
     },
     'Last name': {
-      it: 'Cognome'
+      it: 'Cognome',
+      es: 'Apellido'
     },
     'E-mail address': {
-      it: 'Indirizzo e-mail'
+      it: 'Indirizzo e-mail',
+      es: 'Dirección de email'
     },
     'Confirm e-mail': {
-      it: 'Ripeti e-mail'
+      it: 'Ripeti e-mail',
+      es: 'Confirme el email'
     },
     'Institute data': {
-      it: 'Dati della scuola di provenienza'
+      it: 'Dati della scuola di provenienza',
+      es: 'Datos de la escuela'
     },
     'Region': {
-      it: 'Regione'
+      it: 'Regione',
+      es: 'Región'
     },
     'Province': {
-      it: 'Provincia'
+      it: 'Provincia',
+      es: 'Provincia'
     },
     'City': {
-      it: 'Città'
+      it: 'Città',
+      es: 'Ciudad'
     },
     'Institute': {
-      it: 'Istituto'
+      it: 'Istituto',
+      es: 'Escuela'
     },
     'User profile preview': {
-      it: 'Anteprima del profilo utente'
+      it: 'Anteprima del profilo utente',
+      es: 'Vista previa del perfil de usuario'
     },
     'Profile': {
-      it: 'Profilo'
+      it: 'Profilo',
+      es: 'Perfil'
     },
     'Edit your data': {
-      it: 'Modifica i tuoi dati'
+      it: 'Modifica i tuoi dati',
+      es: 'Modificar sus datos'
     },
     'Old password': {
-      it: 'Vecchia password'
+      it: 'Vecchia password',
+      es: 'Password anterior'
     },
     'New password': {
-      it: 'Nuova password'
+      it: 'Nuova password',
+      es: 'Nuevo password'
     },
     'Confirm new password': {
-      it: 'Ripeti nuova password'
+      it: 'Ripeti nuova password',
+      es: 'Confirme el nuevo password'
     },
     'New e-mail address': {
-      it: 'Nuovo indirizzo email'
+      it: 'Nuovo indirizzo email',
+      es: 'Nueva dirección de email'
     },
     'Change your avatar at gravatar.com': {
-      it: 'Cambia la tua foto di profilo su gravatar.com'
+      it: 'Cambia la tua foto di profilo su gravatar.com',
+      es: 'Cambie su avatar en gravatar.com'
     },
     'Submitted tasks': {
-      it: 'Problemi sottomessi'
+      it: 'Problemi sottomessi',
+      es: 'Problemas enviados'
     },
     'no submissions': {
-      it: 'nessuna sottoposizione'
+      it: 'nessuna sottoposizione',
+      es: 'ningún envío'
     },
 
     // Tasklist page
     'search': {
-      it: 'cerca'
+      it: 'cerca',
+      es: 'búsqueda'
     },
     'Search by name': {
-      it: 'Ricerca per nome'
+      it: 'Ricerca per nome',
+      es: 'Búsqueda por nombre'
     },
     'no tasks found': {
-      it: 'nessun problema trovato'
+      it: 'nessun problema trovato',
+      es: 'no se encontraron problemas'
     },
     'Exercise': {
-      it: 'Esercizio'
+      it: 'Esercizio',
+      es: 'Ejercicio'
     },
 
     // Errors
     'Username is too short': {
-      it: 'Username troppo corto'
+      it: 'Username troppo corto',
+      es: 'El nombre de usuario es demasiado corto'
     },
     'Username is invalid': {
-      it: 'Username non valido'
+      it: 'Username non valido',
+      es: 'El nombre de usuario es inválido'
     },
     'This username is not available': {
-      it: 'Questo username non è disponibile'
+      it: 'Questo username non è disponibile',
+      es: 'Nombre de usuario no disponible'
     },
     'You must specify your password': {
-      it: 'Devi speficicare la tua password'
+      it: 'Devi speficicare la tua password',
+      es: 'Debe especificar su password'
     },
     'Password\'s too short': {
-      it: 'Password troppo corta'
+      it: 'Password troppo corta',
+      es: 'El password es demasiado corto'
     },
     'Passwords don\'t match': {
-      it: 'Le password non combaciano'
+      it: 'Le password non combaciano',
+      es: 'Los passwords no coinciden'
     },
     'Wrong password': {
-      it: 'Password errata'
+      it: 'Password errata',
+      es: 'Password erróneo'
     },
     'Invalid e-mail': {
-      it: 'E-mail non valida'
+      it: 'E-mail non valida',
+      es: 'Email inválido'
     },
     'E-mail already used': {
-      it: 'E-mail già utilizzata'
+      it: 'E-mail già utilizzata',
+      es: 'El email ya se encuentra en uso'
     },
     'E-mails don\'t match': {
-      it: 'Gli indirizzi non combaciano'
+      it: 'Gli indirizzi non combaciano',
+      es: 'Los emails no coinciden'
     },
     'You must specify a region': {
-      it: 'Devi specificare una regione'
+      it: 'Devi specificare una regione',
+      es: 'Debe especificar una región'
     },
     'You must specify a province': {
-      it: 'Devi specificare una provincia'
+      it: 'Devi specificare una provincia',
+      es: 'Debe especificar una provincia'
     },
     'You must specify a city': {
-      it: 'Devi specificare una città'
+      it: 'Devi specificare una città',
+      es: 'Debe especificar una ciudad'
     },
     'You must specify an institute': {
-      it: 'Devi specificare un istituto'
+      it: 'Devi specificare un istituto',
+      es: 'Debe especificar una escuela'
     },
     'Title is too short': {
-      it: 'Titolo troppo corto'
+      it: 'Titolo troppo corto',
+      es: 'El título es demasiado corto'
     },
     'Description is too short': {
-      it: 'Descrizione troppo corta'
+      it: 'Descrizione troppo corta',
+      es: 'La descripción es demasiado corta'
     },
     'Text is too short': {
-      it: 'Testo troppo corto'
+      it: 'Testo troppo corto',
+      es: 'El texto es demasiado corto'
     },
     'User already exists': {
-      it: 'Utente già esistente'
+      it: 'Utente già esistente',
+      es: 'Ya existe el usuario'
     },
 
     // Notifications
     'Welcome back': {
-      it: 'Bentornato'
+      it: 'Bentornato',
+      es: 'Bienvenido otra vez'
     },
     'Login error': {
-      it: 'Login errato'
+      it: 'Login errato',
+      es: 'Error al ingresar'
     },
     'Make sure your internet connection is working and, if this error occurs again, contact an administrator.': {
-      it: 'Assicurati che la tua connessione a internet sia funzionante e, se l\'errore dovesse ripetersi, contatta un amministratore.'
+      it: 'Assicurati che la tua connessione a internet sia funzionante e, se l\'errore dovesse ripetersi, contatta un amministratore.',
+      es: 'Asegúrese de que su conexión a internet esté funcionando, y si el error persiste, contacte a un administrador.'
     },
     'Goodbye': {
-      it: 'Arrivederci'
+      it: 'Arrivederci',
+      es: 'Adiós'
     },
     'User doesn\'t exist': {
-      it: 'Utente non esistente'
+      it: 'Utente non esistente',
+      es: 'Usuario inexistente'
     },
     'Internal error. Make sure your internet connection is working well and, if this error occurs again, contact an administrator.': {
-      it: 'Errore interno. Assicurati che la tua connessione a internet sia funzionante e, se l\'errore dovesse ripetersi, contatta un amministratore.'
+      it: 'Errore interno. Assicurati che la tua connessione a internet sia funzionante e, se l\'errore dovesse ripetersi, contatta un amministratore.',
+      es: 'Error interno. Asegúrese de que su conexión a internet esté funcionando, y si el error persiste, contacte a un administrador.'
     },
     'Internal error': {
-      it: 'Errore interno'
+      it: 'Errore interno',
+      es: 'Error interno',
     },
     'Topic created': {
-      it: 'Argomento creato'
+      it: 'Argomento creato',
+      es: 'Tema creado'
     },
     'Reply sent': {
-      it: 'Risposta inviata'
+      it: 'Risposta inviata',
+      es: 'Respuesta enviada'
     },
     'Edit saved': {
-      it: 'Modifica salvata'
+      it: 'Modifica salvata',
+      es: 'Modificación guardada'
     },
     'Delete completed': {
-      it: 'Eliminazione completata'
+      it: 'Eliminazione completata',
+      es: 'Borrado completado'
     },
     'Connection error': {
-      it: 'Errore di connessione'
+      it: 'Errore di connessione',
+      es: 'Error de conexión'
     },
     'Unauthorized': {
-      it: 'Non autorizzato'
+      it: 'Non autorizzato',
+      es: 'No autorizado'
     },
     'Not found': {
-      it: 'Non trovato'
+      it: 'Non trovato',
+      es: 'No encontrado'
     },
 
     // Forum
     'Forums': {
-      it: 'Forum'
-    }
+      it: 'Forum',
+      es: 'Foros',
+    },
+    
+    
+    // OIA-added
+    "Congratulations, the registration is successful, you can now log on with the credentials of your new account using the form at the top right. Once you're in the system you will have the opportunity to present solutions to task on this page. Good workout.": {
+		it: "Complimenti, la registrazione è andata a buon fine, adesso puoi accedere con le credenziali del tuo nuovo account usando il modulo in alto a destra. Una volta entrato nel sistema avrai la possibilità di sottoporre le soluzioni ai task presenti in questa pagina. Buon allenamento.",
+		es: "Felicitaciones, se ha registrado correctamente. Ya puede ingresar con los datos de su nueva cuenta utilizando los controles de la parte superior derecha. Una vez en el sistema, tendrá la oportunidad de enviar soluciones para los problemas del sitio. Buen entrenamiento."
+	}
   })
   .factory('l10n', function(words) {
     if (localStorage.getItem("language") == undefined) {
+		var language = "es";
       // Detect browser language (ISO 639) and save it in localStorage
-      var language = navigator.userLanguage || navigator.language;
-      if (language.length > 2)
-        language = language.substring(0, 2);
-      localStorage.setItem("language", language);
+      //var language = navigator.userLanguage || navigator.language;
+      //if (language.length > 2)
+      //  language = language.substring(0, 2);
+        localStorage.setItem("language", language);
     }
     return {
       get: function(input) {

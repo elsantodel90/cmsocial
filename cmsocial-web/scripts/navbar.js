@@ -59,5 +59,8 @@ angular.module('cmsocial')
     }, {
       'code': 'it',
       'name': 'Italiano'
+    }, {
+      'code': 'es',
+      'name': 'Español'
     }];
   });

@@ -21,7 +21,7 @@
 
 angular.module('cmsocial')
   .controller('SignupCtrl', function($scope, $http, $state, md5,
-    notificationHub, navbarManager, userManager, contestManager, API_PREFIX) {
+    notificationHub, navbarManager, userManager, contestManager, API_PREFIX, l10n) {
     navbarManager.setActiveTab(5);
     $scope.cm = contestManager;
 
@@ -100,15 +100,12 @@ angular.module('cmsocial')
         return;
       }
       var data = $scope.user;
+      var successText = l10n.get("Congratulations, the registration is successful, you can now log on with the credentials of your new account using the form at the top right. Once you're in the system you will have the opportunity to present solutions to task on this page. Good workout.");
       data['action'] = 'new';
       $http.post(API_PREFIX + 'user', data)
         .success(function(data, status, headers, config) {
           if (data.success === 1) {
-            notificationHub.createAlert('success', 'Complimenti, ' +
-              'la registrazione è andata a buon fine, adesso puoi accedere con le credenziali ' +
-              'del tuo nuovo account usando il modulo in alto a destra. Una volta entrato ' +
-              'nel sistema avrai la possibilità di sottoporre le soluzioni ai task presenti ' +
-              'in questa pagina. Buon allenamento.', 10);
+            notificationHub.createAlert('success', successText, 10);
             $state.go('overview');
             userManager.refresh();
           } else {
