@@ -53,6 +53,7 @@ sudo ln -s "$(pwd)"/oia-config/cms.conf /usr/local/etc/cms.conf
 
 --> Create database from scratch (cmsDropDB to destroy existing database):
 cmsInitDB
+# This line updates the standard cms database, adding the tables and information used by cmsocial (cmsocial/db python files)
 python2 -c "import cmsocial.db; from cms.db import metadata; metadata.create_all()"
 psql oiajuez -h 127.0.0.1 -d database < sql_scripts/create_triggers.sql
    
