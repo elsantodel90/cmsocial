@@ -6,9 +6,13 @@
     <div class="col-xs-6">
       <h3 class="userbadge {{user.access_level | levelClass}}">
         {{user.username}}
-        <small class="label label-default">{{user.access_level | levelClass}}</small>
+        <small ng-if="user.access_level == 0" class="label label-default">{{user.access_level | levelClass}}</small>
       </h3>
       <br />
+        <h2><span style="text-transform: capitalize;">
+          {{user.first_name}} {{user.last_name}}
+        </span></h2><br />
+        <i class="fa fa-home fa-lg"></i> {{user.oiaescuela}} ({{user.oiaciudad}} , {{user.oiaprovincia}})
       <span ng-if="user.institute.name">
         <i class="fa fa-home fa-lg"></i> {{user.institute.name}} ({{user.institute.province}})
       </span>

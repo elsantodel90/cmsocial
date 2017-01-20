@@ -95,6 +95,22 @@ class SocialUser(Base):
             passive_deletes=True
         )
     )
+    
+    # OIA-fields:
+    oiaescuela = Column(
+        String,
+        nullable=True
+    )
+    
+    oiaciudad = Column(
+        String,
+        nullable=True
+    )
+    
+    oiaprovincia = Column(
+        String,
+        nullable=True
+    )
 
     # List of tasktags (not "approved" yet) created by this user
     # FIXME: the following causes a circular dependency

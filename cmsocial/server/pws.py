@@ -392,6 +392,9 @@ class APIHandler(object):
         info['mail_hash'] = self.hash(user.email, 'md5')
         info['institute'] = self.get_institute_info(
             user.social_user.institute_id)
+        info['oiaescuela'] = user.social_user.oiaescuela
+        info['oiaciudad'] = user.social_user.oiaciudad
+        info['oiaprovincia'] = user.social_user.oiaprovincia
         info['first_name'] = user.first_name
         info['last_name'] = user.last_name
         info['tasks_solved'] = -1
