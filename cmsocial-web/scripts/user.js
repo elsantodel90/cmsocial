@@ -200,11 +200,21 @@ angular.module('cmsocial')
       password2: '',
       password3: '',
       email: '',
+      firstname: '',
+      lastname: '',
+      oiaescuela: '',
+      oiaciudad: '',
+      oiaprovincia: '',
     };
     $scope.submit = function() {
       var data = {};
       data['action'] = 'update';
       data['email'] = $scope.user.email;
+      data['firstname'] = $scope.user.firstname;
+      data['lastname'] = $scope.user.lastname;
+      data['oiaescuela'] = $scope.user.oiaescuela;
+      data['oiaciudad'] = $scope.user.oiaciudad;
+      data['oiaprovincia'] = $scope.user.oiaprovincia;
 
       if ($scope.user.password2.length > 0) {
         if ($scope.user.password3 !== $scope.user.password2)

@@ -456,6 +456,27 @@ angular.module('cmsocial')
     'New e-mail address': {
       it: 'Nuovo indirizzo email',
       es: 'Nueva dirección de email'
+    
+    },
+    'New firstname': {
+      it: 'Nuovo nome',
+      es: 'Nuevo nombre'
+    },
+    'New lastname': {
+      it: 'Nuovo cognome',
+      es: 'Nuevo apellido'
+    },
+    'New school': {
+      it: 'Nuovo istituto',
+      es: 'Nueva escuela'
+    },
+    'New city': {
+      it: 'Nuova città',
+      es: 'Nueva ciudad'
+    },
+    'New province': {
+      it: 'Nuova provincia',
+      es: 'Nueva provincia'
     },
     'Change your avatar at gravatar.com': {
       it: 'Cambia la tua foto di profilo su gravatar.com',

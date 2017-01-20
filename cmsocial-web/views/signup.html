@@ -40,6 +40,56 @@
               <input class="form-control" maxlength="30" autocomplete="off" type="text" id="lastname" ng-model="user.lastname"/>
             </div>
           </div>
+          
+          
+          <!-- OIA SPECIFIC INFORMATION (New database fields)
+          -->
+          <div class="form-group">
+            <label class="col-sm-4 control-label" for="oiaescuela">{{'Institute' | l10n}}</label>
+            <div class="col-sm-6">
+              <input class="form-control" maxlength="50" autocomplete="off" type="text" id="oiaescuela" ng-model="user.oiaescuela"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label" for="oiaciudad">{{'City' | l10n}}</label>
+            <div class="col-sm-6">
+              <input class="form-control" maxlength="50" autocomplete="off" type="text" id="oiaciudad" ng-model="user.oiaciudad"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label" for="oiaprovincia">{{'Province' | l10n}}</label>
+            <div class="col-sm-6">
+              <select class="form-control" type="text" id="oiaprovincia" ng-model="user.oiaprovincia">
+				    <option value="CABA">CABA</option>
+					<option value="Buenos Aires">Buenos Aires</option>
+					<option value="Catamarca">Catamarca</option>
+					<option value="Chaco">Chaco</option>
+					<option value="Chubut">Chubut</option>
+					<option value="Córdoba">Córdoba</option>
+					<option value="Corrientes">Corrientes</option>
+					<option value="Entre Ríos">Entre Ríos</option>
+					<option value="Formosa">Formosa</option>
+					<option value="Jujuy">Jujuy</option>
+					<option value="La Pampa">La Pampa</option>
+					<option value="La Rioja">La Rioja</option>
+					<option value="Mendoza">Mendoza</option>
+					<option value="Misiones">Misiones</option>
+					<option value="Neuquén">Neuquén</option>
+					<option value="Río Negro">Río Negro</option>
+					<option value="Salta">Salta</option>
+					<option value="San Juan">San Juan</option>
+					<option value="San Luis">San Luis</option>
+					<option value="Santa Cruz">Santa Cruz</option>
+					<option value="Santa Fe">Santa Fe</option>
+					<option value="Santiago del Estero">Santiago del Estero</option>
+					<option value="Tierra del Fuego, Antártida e Islas del Atlántico Sur">Tierra del Fuego, Antártida e Islas del Atlántico Sur</option>
+					<option value="Tucumán">Tucumán</option>
+		      </select>
+            </div>
+          </div>
+          
+          
+          
           <div class="form-group" ng-class="{'has-error': signupform.email.$dirty && isBad['email']}">
             <label class="col-sm-4 control-label" for="email1">{{'E-mail address' | l10n}}</label>
             <div class="col-sm-6">
@@ -76,9 +126,9 @@
           <img src="//gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?d=identicon&s=200" class="avatar img-thumbnail"/>
           <img src="images/loader.gif" class="avatar-loader"/>
         </div>
-        <h2>{{{true: user.username, false: '(username)'}[user.username.length > 0]}}</h2>
+        <h2>{{{true: user.username, false: '(nombre de usuario)'}[user.username.length > 0]}}</h2>
         <span class="nome-cognome">
-          {{{true: user.firstname, false: '(nome)'}[user.firstname.length > 0] | lowercase}} {{{true: user.lastname, false: '(cognome)'}[user.lastname.length > 0] | lowercase}}
+          {{{true: user.firstname, false: '(nombre)'}[user.firstname.length > 0] | lowercase}} {{{true: user.lastname, false: '(apellido)'}[user.lastname.length > 0] | lowercase}}
         </span>
       </div>
     </div>

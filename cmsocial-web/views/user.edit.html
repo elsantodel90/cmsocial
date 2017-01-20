@@ -31,6 +31,65 @@
           </div>
         </div>
         <div class="form-group">
+          <label class="col-sm-4 control-label" for="firstname">{{'New firstname' | l10n}}</label>
+          <div class="col-sm-6">
+            <input class="form-control" autocomplete="off" type="text" id="firstname" name="firstname" ng-model="user.firstname"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4 control-label" for="lastname">{{'New lastname' | l10n}}</label>
+          <div class="col-sm-6">
+            <input class="form-control" autocomplete="off" type="text" id="lastname" name="lastname" ng-model="user.lastname"/>
+          </div>
+        </div>
+        
+        <!-- OIA-SPECIFIC FIELDS -->
+        <div class="form-group">
+          <label class="col-sm-4 control-label" for="oiaescuela">{{'New school' | l10n}}</label>
+          <div class="col-sm-6">
+            <input class="form-control" autocomplete="off" type="text" id="oiaescuela" name="oiaescuela" ng-model="user.oiaescuela"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-4 control-label" for="oiaciudad">{{'New city' | l10n}}</label>
+          <div class="col-sm-6">
+            <input class="form-control" autocomplete="off" type="text" id="oiaciudad" name="oiaciudad" ng-model="user.oiaciudad"/>
+          </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="oiaprovincia">{{'New province' | l10n}}</label>
+            <div class="col-sm-6">
+              <select class="form-control" type="text" id="oiaprovincia" ng-model="user.oiaprovincia">
+				    <option value="CABA">CABA</option>
+					<option value="Buenos Aires">Buenos Aires</option>
+					<option value="Catamarca">Catamarca</option>
+					<option value="Chaco">Chaco</option>
+					<option value="Chubut">Chubut</option>
+					<option value="Córdoba">Córdoba</option>
+					<option value="Corrientes">Corrientes</option>
+					<option value="Entre Ríos">Entre Ríos</option>
+					<option value="Formosa">Formosa</option>
+					<option value="Jujuy">Jujuy</option>
+					<option value="La Pampa">La Pampa</option>
+					<option value="La Rioja">La Rioja</option>
+					<option value="Mendoza">Mendoza</option>
+					<option value="Misiones">Misiones</option>
+					<option value="Neuquén">Neuquén</option>
+					<option value="Río Negro">Río Negro</option>
+					<option value="Salta">Salta</option>
+					<option value="San Juan">San Juan</option>
+					<option value="San Luis">San Luis</option>
+					<option value="Santa Cruz">Santa Cruz</option>
+					<option value="Santa Fe">Santa Fe</option>
+					<option value="Santiago del Estero">Santiago del Estero</option>
+					<option value="Tierra del Fuego, Antártida e Islas del Atlántico Sur">Tierra del Fuego, Antártida e Islas del Atlántico Sur</option>
+					<option value="Tucumán">Tucumán</option>
+		      </select>
+            </div>
+          </div>
+
+        
+        <div class="form-group">
           <div class="col-sm-offset-4 col-sm-8">
             <button type="submit" class="btn btn-warning">{{'Apply' | l10n}}</button>
           </div>

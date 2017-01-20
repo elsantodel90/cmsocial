@@ -558,6 +558,9 @@ class APIHandler(object):
                 email = local.data['email'].lower()
                 firstname = local.data['firstname']
                 lastname = local.data['lastname']
+                oiaescuela = local.data['oiaescuela']
+                oiaciudad = local.data['oiaciudad']
+                oiaprovincia = local.data['oiaprovincia']
                 recaptcha_response = local.data['recaptcha_response'] if \
                     'recaptcha_response' in local.data else None
             except KeyError:
@@ -598,7 +601,10 @@ class APIHandler(object):
             )
             social_user = SocialUser(
                 access_level=6,
-                registration_time=make_datetime()
+                registration_time=make_datetime(),
+                oiaescuela = oiaescuela,
+                oiaciudad = oiaciudad,
+                oiaprovincia = oiaprovincia
             )
             social_user.user = user
 
@@ -720,6 +726,16 @@ class APIHandler(object):
                 if err is not None:
                     return err
                 local.user.email = local.data['email']
+            if 'firstname' in local.data and local.data['firstname'] != '' and local.user.first_name != local.data['firstname']:
+                local.user.first_name = local.data['firstname']
+            if 'lastname' in local.data and local.data['lastname'] != '' and local.user.last_name != local.data['lastname']:
+                local.user.last_name = local.data['lastname']
+            if 'oiaescuela' in local.data and local.data['oiaescuela'] != '' and local.user.social_user.oiaescuela != local.data['oiaescuela']:
+                local.user.social_user.oiaescuela = local.data['oiaescuela']
+            if 'oiaciudad' in local.data and local.data['oiaciudad'] != '' and local.user.social_user.oiaciudad != local.data['oiaciudad']:
+                local.user.social_user.oiaciudad = local.data['oiaciudad']
+            if 'oiaprovincia' in local.data and local.data['oiaprovincia'] != '' and local.user.social_user.oiaprovincia != local.data['oiaprovincia']:
+                local.user.social_user.oiaprovincia = local.data['oiaprovincia']
             if 'old_password' in local.data and \
                     local.data['old_password'] != '':
                 old_token = self.hashpw(local.data['old_password'])
