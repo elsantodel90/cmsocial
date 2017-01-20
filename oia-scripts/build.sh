@@ -9,7 +9,8 @@ then
     exit
 fi
 
-cd ..    
+cd ..
+sudo rm -rf build/ cmsocial-web-build/
 make
 sudo python2 ./setup.py install
 sudo rm -f /usr/local/etc/cmsocial.ini
