@@ -1,9 +1,6 @@
 #!/usr/bin/python
 
 from oia_db_connection import performDatabaseOperation
-
-
-from oia_db_connection import performDatabaseOperation
 import sys
 
 def setAccessLevel(userId, newAccessLevel):
