@@ -10,8 +10,8 @@ git checkout oia-juez-develop
 --> Download cms dependencies [We are going to install CMS 1.3: http://cms.readthedocs.io/en/latest/Installation.html] CMS 1.3:
 sudo apt-get install build-essential fpc postgresql postgresql-client gettext python2.7 iso-codes shared-mime-info stl-manual cgroup-lite
 
---> Also, I had to manually add these in order for some stuff to compile without errors. But maybe that was before I realized I should install 1.3 dependencies...
-			  postgresql-server-dev-all libcups2-dev
+--> Also, I had to manually add these in order for some stuff to compile without errors.
+			  postgresql-server-dev-all libcups2-dev python-dev
 		  
 --> Create postgres database
 sudo su - postgres
