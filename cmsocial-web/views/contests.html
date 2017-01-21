@@ -1,0 +1,28 @@
+<div class="container">
+    
+  <div class="tag-group">
+      <table style="border-spacing : 5px 8px;">
+      <tr>
+          <td>Todos los años:</td>
+          <td ng-repeat="contest in nationalContests">
+          <a ui-sref="tasklist.page({tag: 'certamen:' + contest, pageNum: 1})" class="label btn-info">
+            <i class="fa fa-tag"></i>
+            {{contest}}
+          </a>
+          </td>
+      </tr>
+      <tr ng-repeat="year in years">
+          <td><a ui-sref="tasklist.page({tag: 'año:' + year, pageNum: 1})" class="label btn-info">
+            <i class="fa fa-tag"></i>
+            Año {{year}}:
+          </a></td>
+          <td ng-repeat="contest in nationalContests">
+          <a ui-sref="tasklist.page({tag: 'año:' + year + ',certamen:' + contest, pageNum: 1})" class="label btn-info">
+            <i class="fa fa-tag"></i>
+            {{contest}}
+          </a>
+          </td>
+      </tr>
+      </table>
+  </div>
+</div>

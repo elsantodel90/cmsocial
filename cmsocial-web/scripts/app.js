@@ -48,6 +48,11 @@ angular
         templateUrl: 'views/tags.html',
         controller: 'TagsPage'
       })
+      .state('contesttags', {
+        url: '/contests',
+        templateUrl: 'views/contests.html',
+        controller: 'ContestTagsPage'
+      })
       .state('tasklist', {
         templateUrl: 'views/tasklist.html',
         controller: 'TasklistSkel'

@@ -203,6 +203,26 @@ angular.module('cmsocial')
     };
     $scope.getTags();
   })
+  .controller('ContestTagsPage', function($scope, $http, notificationHub, API_PREFIX) {
+    $scope.getYears = function() {
+      $http.post(API_PREFIX + 'tag', {
+          'action': 'list',
+          'startswith' : 'año:'
+        })
+        .success(function(data, status, headers, config) {
+          $scope.years = data['tags'];
+          for (var i=0; i<$scope.years.length; i++)
+            $scope.years[i] = $scope.years[i].substr(4, 4);
+          $scope.years.sort();
+          $scope.years.reverse();
+        })
+        .error(function(data, status, headers, config) {
+          notificationHub.serverError(status);
+        });
+    };
+    $scope.nationalContests = ["NacionalNivel1","NacionalNivel2","NacionalNivel3","Selectivo"];
+    $scope.getYears();
+  })
   .controller('HelpCtrl', function($scope, $stateParams, $http,
     notificationHub, API_PREFIX) {
     $scope.data = {
