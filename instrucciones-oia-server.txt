@@ -57,12 +57,14 @@ cmsInitDB
 python2 -c "import cmsocial.db; from cms.db import metadata; metadata.create_all()"
 psql oiajuez -h 127.0.0.1 -d database < sql_scripts/create_triggers.sql
    
+--> There is an update script sql_updaters/addOiaInfo.sql (ending in ROLLBACK like all updaters: should be changed to COMMIT to use it), which adds the oia fields to the database.
+--> If they were not already added with the previous steps, running it should work.
+   
 --> Create an admin user:
 cmsAddAdmin -p pass user
 
 --> Practise webserver is accesed at localhost:18888/contestName/
             ---> That last / is super important and cannot be ommited.
-
 
 ------> Configuration
 
@@ -70,9 +72,39 @@ cmsAddAdmin -p pass user
         Database connection line (if needed): postgresql+psycopg2://oiajuez:oiapass@localhost/database
         Make sure to change the "secret" from its dummy value
 
+--> Database: create a single contest (should have id 1).
+		recommended name: OIAJ
+		description: A declarative description, will be shown in the judge's homepage
 
+--> By adding problems to this contest, problems are added to the judge. An admin can add tags to a problems. New tags are created the the add-tag.py script.
+		
+--> oia-scripts:
+    startUpOiaJuezLogging.sh, should be run in a screen session, logs into oia-scripts/oiaJuezLogs.
+	build.sh,  builds and updates everything (if changes are made to the site, the server should be shut down, this should be run, the server should be restart. Shutting down logging is not necessary)
+	startUpOiaJuez.sh, starts and keeps up the server itself, should be run on a screen session. CTRL + C stops it.
+	print-users.py, prints information from the database about all the registered users.
+	set-access-level.py, allows to change the access level of a user (0 -> admin, 6 -> normal user, some intermediate levels allow modifying tags, we should probably not use them)
+	set-contest-homename-and-title.py, allows to set homename ("OIAJ", shown in the upper-left button) and title ("OIAJ - Juez Online Oficial de la Olimpíada Informática Argentina.") for the webpage.
+	add-tag.py, creates a new tag
 
-
+--> tags conventions (they are used by the system, so this naming must be respected): 
+	year tags like:
+		año:2016
+		año:2007
+		año:2006
+		año:2005
+		año:1998
+	topic tags like:
+		tema:dp
+		tema:dijkstra
+		tema:goloso
+	contest tags like:
+		certamen:MetropolitanoNivel1
+		certamen:NacionalNivel1
+		certamen:NacionalNivel3
+		certamen:Selectivo
+		certamen:CIIC
+		certamen:IOI
 
 
 
