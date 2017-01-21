@@ -59,7 +59,7 @@
         <div class="newtagstuff modal-body" style="display: none">
           <form class="search-by-tag form-horizontal" role="form" ng-submit="reloadTasks()">
             <div class="form-group">
-              <label class="col-sm-4 control-label" for="newtag">Tagga questo problema</label>
+              <label class="col-sm-4 control-label" for="newtag">{{'Tagga questo problema' | l10n}}</label>
               <div class="col-sm-6">
                 <select id="tagchooser" disabled="disabled" class="form-control" maxlength="30" autocomplete="off" id="newtag" name="newtag" ng-model="tag.newtag" type="text">
                   <option ng-repeat="tag in tags">{{tag}}</option>
@@ -69,7 +69,7 @@
             </div>
             <div class="form-group">
               <div class="col-sm-offset-4 col-sm-8">
-                <button type="submit" class="btn btn-default ng-binding" ng-click="tagAdd()">Aggiungi tag</button>
+                <button type="submit" class="btn btn-default ng-binding" ng-click="tagAdd()">{{'Aggiungi tag' | l10n}}</button>
               </div>
             </div>
           </form>

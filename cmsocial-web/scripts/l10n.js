@@ -52,6 +52,9 @@ angular.module('cmsocial')
       it: 'Sfoglia...',
       es: 'Explorar...'
     },
+    'Loading...' : {
+	  es: 'Cargando...'
+	},
     'Changes recorded': {
       it: 'Modifiche registrate',
       es: 'Se han guardado las modificaciones'
@@ -139,6 +142,15 @@ angular.module('cmsocial')
       it: 'Tag',
       es: 'Etiquetas'
     },
+    'no tags' : {
+		es: "no hay etiquetas"
+	},
+	'Aggiungi tag' : {
+		es: "Agregar etiqueta"
+	},
+	'Tagga questo problema' : {
+		es: "Etiquetar este problema"
+	},
     'Tags list': {
       it: 'Elenco dei tag',
       es: 'Lista de etiquetas'

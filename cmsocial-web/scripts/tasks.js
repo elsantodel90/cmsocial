@@ -191,7 +191,8 @@ angular.module('cmsocial')
   .controller('TagsPage', function($scope, $http, notificationHub, API_PREFIX) {
     $scope.getTags = function() {
       $http.post(API_PREFIX + 'tag', {
-          'action': 'list'
+          'action': 'list',
+          'startswith' : 'tema:'
         })
         .success(function(data, status, headers, config) {
           $scope.tags = data['tags'];

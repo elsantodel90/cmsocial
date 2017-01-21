@@ -1023,10 +1023,14 @@ class APIHandler(object):
 
     def tag_handler(self):
         if local.data['action'] == 'list':
+            if 'startswith' in local.data:
+                prefix = local.data['startswith']
+            else:
+                prefix = ""
             tags = local.session.query(Tag)\
                 .order_by(Tag.id)\
                 .filter(Tag.hidden == False).all()
-            local.resp['tags'] = [t.name for t in tags]
+            local.resp['tags'] = [t.name for t in tags if t.name.startswith(prefix)]
         elif local.data['action'] == 'create':
             if local.access_level >= 4:
                 return 'Unauthorized'
