@@ -58,7 +58,7 @@ python2 -c "import cmsocial.db; from cms.db import metadata; metadata.create_all
 psql oiajuez -h 127.0.0.1 -d database < sql_scripts/create_triggers.sql
    
 --> There is an update script sql_updaters/addOiaInfo.sql (ending in ROLLBACK like all updaters: should be changed to COMMIT to use it), which adds the oia fields to the database.
---> If they were not already added with the previous steps, running it should work.
+--> IF (should not be the case normally) they were not already added with the previous steps, running it should work.
    
 --> Create an admin user:
 cmsAddAdmin -p pass user
@@ -72,7 +72,7 @@ cmsAddAdmin -p pass user
         Database connection line (if needed): postgresql+psycopg2://oiajuez:oiapass@localhost/database
         Make sure to change the "secret" from its dummy value
 
---> Database: create a single contest (should have id 1).
+--> Database: create a single contest (should have id 1). Use cmsAdminWebServer for it (startUpOiaJuez.sh cannot be used before creating the first contest. Once there is a contest, adminWebServer is also started by startUpOiaJuez.sh)
 		recommended name: OIAJ
 		description: A declarative description, will be shown in the judge's homepage
 
