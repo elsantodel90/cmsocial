@@ -53,19 +53,19 @@ angular.module('cmsocial')
       var date = new Date(sub.timestamp * 1000);
       sub.time = date.toLocaleString();
       if (sub.compilation_outcome == null) {
-        sub.status = 'Compilazione in corso...';
+        sub.status = l10n.get('Compiling...');
         updInterval[sub.id] = intervalFromAttempts(updAttempts[sub.id]);
       } else if (sub.compilation_outcome == 'fail') {
         sub.cl = 'wrong';
-        sub.status = 'Compilazione fallita';
+        sub.status = l10n.get('Compilation failed');
       } else if (sub.evaluation_outcome == null) {
-        sub.status = 'Valutazione in corso...';
+        sub.status = l10n.get('Evaluating...');
         updInterval[sub.id] = intervalFromAttempts(updAttempts[sub.id]);
       } else if (sub.evaluation_outcome == 'fail') { // ???
         sub.cl = 'wrong';
-        sub.status = 'Valutazione fallita';
+        sub.status = l10n.get('Evaluation failed');
       } else if (sub.score == null) {
-        sub.status = 'Assegnazione del punteggio';
+        sub.status = l10n.get('Scoring...');
         updInterval[sub.id] = intervalFromAttempts(updAttempts[sub.id]);
       } else {
         var score = sub.score;

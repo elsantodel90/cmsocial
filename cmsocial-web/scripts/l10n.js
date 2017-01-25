@@ -230,6 +230,30 @@ angular.module('cmsocial')
       it: 'Dettagli della sottoposizione',
       es: 'Detalles del envío'
     },
+    'Compiling...': {
+      it: 'Compilazione in corso...',
+      es: 'Compilando...'
+    },
+    
+    'Compilation failed': {
+      it: 'Compilazione fallita',
+      es: 'Error de compilación'
+    },
+    
+    'Evaluating...': {
+      it: 'Valutazione in corso...',
+      es: 'Evaluando...'
+    },
+    
+    'Evaluation failed': {
+      it: 'Valutazione fallita',
+      es: 'Evaluación fallida'
+    },
+    
+    'Scoring...': {
+      it: 'Assegnazione del punteggio',
+      es: 'Puntuando...'
+    },    
     'Compilation output': {
       it: 'Output della compilazione',
       es: 'Salida del compilador'
