@@ -24,6 +24,10 @@ angular.module('cmsocial')
       it: 'Chiudi',
       es: 'Cerrar'
     },
+    'Download': {
+      it: 'Scarica',
+      es: 'Descargar'
+    },
     'Submit': {
       it: 'Invia',
       es: 'Enviar'
