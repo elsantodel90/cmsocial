@@ -40,9 +40,9 @@ EOF
     for es in *
     do
         tname="Lez${lez#Lezione }${es}c${CONTEST}"
-        ttitle=$(grep title\{ $es/testo.tex | sed 's/.*{\(.*\)}/\1/' | sed s/\\$//g)
+        ttitle=$(grep title\{ $es/enunciado.tex | sed 's/.*{\(.*\)}/\1/' | sed s/\\$//g)
         mkdir $tname
-        mkdir $tname/{input,output,testo,att}
+        mkdir $tname/{input,output,enunciado,att}
         count=0
         for cnt in $es/input*
         do
@@ -50,7 +50,7 @@ EOF
             cp $(echo $cnt | sed s/input/output/g) $tname/output/output$count.txt
             let count=$count+1
         done
-        cp $es/testo.pdf $tname/testo/
+        cp $es/enunciado.pdf $tname/enunciado/
         pushd $es
         zip ../$tname/att/TestSet.zip input* output*
         popd
