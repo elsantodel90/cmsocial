@@ -165,7 +165,7 @@ angular.module('cmsocial')
     },
     'Time available for the execution of one testcase, measured in seconds.': {
       it: 'La quantità di tempo, in secondi, disponibile per l\'esecuzione di un testcase.',
-      es: 'Tiempo disponible para la ejecución de un caso de prueba, medida en MiB'
+      es: 'Tiempo disponible para la ejecución de un caso de prueba, en segundos'
     },
     'Tags are useful to classify tasks by a common characteristic or technique, such as: <i>greedy</i>, <i>graphs</i>, and so on.': {
       it: 'I tag servono per classificare e raggruppare i problemi in base ad una caratteristica comune, ad esempio: <i>greedy</i>, <i>grafi</i>, e così via.',
