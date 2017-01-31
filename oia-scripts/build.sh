@@ -12,6 +12,7 @@ fi
 cd ..
 sudo rm -rf build/ cmsocial-web-build/
 make
-sudo python2 ./setup.py install
+#sudo python2 ./setup.py install
+sudo python2 ./setup.py develop
 sudo rm -f /usr/local/etc/cmsocial.ini
 sudo ln -s "$(pwd)"/config/cmsocial.ini /usr/local/etc/cmsocial.ini
