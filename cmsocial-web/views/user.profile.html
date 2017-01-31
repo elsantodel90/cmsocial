@@ -12,7 +12,12 @@
         <h2><span style="text-transform: capitalize;">
           {{user.first_name}} {{user.last_name}}
         </span></h2><br />
+        <span ng-if="!(user.oiaciudad == '' || (user.oiaprovincia == 'CABA' && user.oiaciudad == 'CABA'))">
         <i class="fa fa-home fa-lg"></i> {{user.oiaescuela}} ({{user.oiaciudad}} , {{user.oiaprovincia}})
+        </span>
+        <span ng-if="user.oiaciudad == '' || (user.oiaprovincia == 'CABA' && user.oiaciudad == 'CABA')">
+        <i class="fa fa-home fa-lg"></i> {{user.oiaescuela}} ({{user.oiaprovincia}})
+        </span>
       <span ng-if="user.institute.name">
         <i class="fa fa-home fa-lg"></i> {{user.institute.name}} ({{user.institute.province}})
       </span>
