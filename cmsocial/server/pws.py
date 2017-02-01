@@ -52,6 +52,8 @@ from cmsocial.db.socialtask import SocialTask, Tag, TaskScore, TaskTag
 from cmsocial.db.socialuser import SocialParticipation, SocialUser
 from cmsocial.db.test import Test, TestScore
 
+
+
 monkey.patch_all()
 
 
@@ -738,8 +740,7 @@ class APIHandler(object):
                 local.user.social_user.oiaprovincia = local.data['oiaprovincia']
             if 'old_password' in local.data and \
                     local.data['old_password'] != '':
-                old_token = self.hashpw(local.data['old_password'])
-                if local.user.password != old_token:
+                if not self.validate(local.data['old_password'], local.user.password):
                     return 'Wrong password'
                 if len(local.data['password']) < 5:
                     return 'Password\'s too short'
