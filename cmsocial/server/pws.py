@@ -1332,7 +1332,7 @@ class APIHandler(object):
                 for subtask in submission['score_details']:
                     for testcase in subtask['testcases']:
                         data = json.loads(testcase['text'])
-                        testcase['text'] = data[0] % tuple(data[1:])
+                        testcase['text'] = data[0].replace('%d','%s') % tuple(data[1:])
             else:
                 submission['score_details'] = None
             local.resp = submission
