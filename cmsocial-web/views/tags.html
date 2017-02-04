@@ -4,7 +4,7 @@
     <ul>
         <li ng-repeat="tag in tags">
             <span class="tag-group-item" >
-              <a ui-sref="tasklist.page({tag: tag, pageNum: 1})" class="label btn-info">
+              <a ui-sref="tasklist.page({tag: tag.name, pageNum: 1})" class="label btn-info">
                 <i class="fa fa-tag"></i>
                 {{tag.name}}
               </a>
