@@ -90,9 +90,9 @@ BEGIN;
 		WHERE task_id = t_id AND score::integer = 100;
 
 		-- Total score of user
-		SELECT sum(score) INTO total_score
-		FROM taskscores
-		WHERE participation_id = p_id;
+		SELECT sum(score * token_max_number / 100) INTO total_score
+		FROM taskscores, tasks
+		WHERE participation_id = p_id AND task_id = tasks.id;
 
 		UPDATE social_tasks
 		SET nsubs = vars.nsubs, nsubscorrect = vars.nsubscorrect, nusers = vars.nusers, nuserscorrect = vars.nuserscorrect
