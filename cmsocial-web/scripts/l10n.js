@@ -532,6 +532,9 @@ angular.module('cmsocial')
     },
 
     // Tasklist page
+    'Hide solved tasks':{
+        es: 'Ocultar problemas resueltos'
+    },
     'search': {
       it: 'cerca',
       es: 'buscar'

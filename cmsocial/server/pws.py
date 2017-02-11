@@ -929,10 +929,15 @@ class APIHandler(object):
             if local.contest is None:
                 return 'Bad request'
             query = local.session.query(Task)\
-                .join(SocialTask)\
-                .filter(Task.contest_id == local.contest.id)\
-                .filter(SocialTask.access_level >= local.access_level)\
-                .order_by(SocialTask.id)
+                         .join(SocialTask)\
+                         .filter(Task.contest_id == local.contest.id)\
+                         .filter(SocialTask.access_level >= local.access_level)\
+                         .order_by(SocialTask.id)
+            
+            if local.participation is not None:
+                query = query.join(TaskScore).filter(TaskScore.participation_id == local.participation.id)
+                if 'hideSolved' in local.data and local.data['hideSolved'] == True:
+                    query = query.filter(TaskScore.score != 100)
 
             if 'tag' in local.data and local.data['tag'] is not None:
                 # Ignore requests with more that 5 tags
@@ -959,13 +964,8 @@ class APIHandler(object):
                 task['name'] = t.name
                 task['title'] = t.title
 
-                if local.participation is not None:
-                    taskscore = local.session.query(TaskScore)\
-                        .filter(TaskScore.task_id == t.id)\
-                        .filter(TaskScore.participation_id == local.participation.id).first()
-
-                    if taskscore is not None:
-                        task['score'] = taskscore.score
+                if local.participation is not None and t.score is not None:
+                    task['score'] = t.score
 
                 local.resp['tasks'].append(task)
 
