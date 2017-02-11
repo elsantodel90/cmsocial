@@ -534,11 +534,11 @@ angular.module('cmsocial')
     // Tasklist page
     'search': {
       it: 'cerca',
-      es: 'búsqueda'
+      es: 'buscar'
     },
     'Search by name': {
       it: 'Ricerca per nome',
-      es: 'Búsqueda por nombre'
+      es: 'Buscar por nombre'
     },
     'no tasks found': {
       it: 'nessun problema trovato',

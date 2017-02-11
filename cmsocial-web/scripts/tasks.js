@@ -162,6 +162,7 @@ angular.module('cmsocial')
     notificationHub, l10n, API_PREFIX) {
     $scope.pagination.current = +$stateParams.pageNum;
     $scope.search.q = $stateParams.q;
+    $scope.search.tag = $stateParams.tag;
     $scope.search.tag_string = "";
     if ($scope.search.tag != null) {
       $scope.search.tags = $scope.search.tag.split(",");

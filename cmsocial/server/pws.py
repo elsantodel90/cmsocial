@@ -932,7 +932,7 @@ class APIHandler(object):
                 .join(SocialTask)\
                 .filter(Task.contest_id == local.contest.id)\
                 .filter(SocialTask.access_level >= local.access_level)\
-                .order_by(desc(SocialTask.id))
+                .order_by(SocialTask.id)
 
             if 'tag' in local.data and local.data['tag'] is not None:
                 # Ignore requests with more that 5 tags
