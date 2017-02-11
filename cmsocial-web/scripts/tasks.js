@@ -151,11 +151,14 @@ angular.module('cmsocial')
       if (new_q != null && new_q.length < 1) {
         new_q = null;
       }
+      var hSolved = null;
+      if ($scope.search.hideSolved)
+          hSolved = "true";
       $state.go('^.page', {
         'pageNum': 1,
         'tag': $scope.search.tag,
         'q': new_q,
-        'hideSolved':$scope.search.hideSolved
+        'hideSolved': hSolved
       });
     };
   })
@@ -164,7 +167,7 @@ angular.module('cmsocial')
     $scope.pagination.current = +$stateParams.pageNum;
     $scope.search.q = $stateParams.q;
     $scope.search.tag = $stateParams.tag;
-    $scope.search.hideSolved = $stateParams.hideSolved;
+    $scope.search.hideSolved = $stateParams.hideSolved === "true";
     $scope.search.tag_string = "";
     if ($scope.search.tag != null) {
       $scope.search.tags = $scope.search.tag.split(",");
@@ -173,7 +176,7 @@ angular.module('cmsocial')
       $http.post(API_PREFIX + 'task', {
           'search': $stateParams.q, // can be null
           'tag': $stateParams.tag, // can be null
-          'hideSolved':, $stateParams.hideSolved, // can be null
+          'hideSolved': $scope.search.hideSolved, // can be null
           'first': $scope.pagination.perPage * ($scope.pagination.current - 1),
           'last': $scope.pagination.perPage * $scope.pagination.current,
           'action': 'list'

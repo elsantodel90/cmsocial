@@ -58,7 +58,7 @@ angular
         controller: 'TasklistSkel'
       })
       .state('tasklist.page', {
-        url: '/tasks/{pageNum}?tag&q',
+        url: '/tasks/{pageNum}?tag&q&hideSolved',
         templateUrl: 'views/tasks.html',
         controller: 'TasklistPage'
       })

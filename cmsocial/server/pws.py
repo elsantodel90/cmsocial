@@ -935,9 +935,9 @@ class APIHandler(object):
                          .order_by(SocialTask.id)
             
             if local.participation is not None:
-                query = query.join(TaskScore).filter(TaskScore.participation_id == local.participation.id)
+                query = query.outerjoin(TaskScore).filter(or_(TaskScore.participation_id == None , TaskScore.participation_id == local.participation.id)).add_entity(TaskScore)
                 if 'hideSolved' in local.data and local.data['hideSolved'] == True:
-                    query = query.filter(TaskScore.score != 100)
+                    query = query.filter(or_(TaskScore.score == None , TaskScore.score != 100))
 
             if 'tag' in local.data and local.data['tag'] is not None:
                 # Ignore requests with more that 5 tags
@@ -960,12 +960,17 @@ class APIHandler(object):
 
             for t in tasks:
                 task = dict()
-                task['id'] = t.id
-                task['name'] = t.name
-                task['title'] = t.title
 
-                if local.participation is not None and t.score is not None:
-                    task['score'] = t.score
+                if local.participation is not None:
+                    task['id'] = t.Task.id
+                    task['name'] = t.Task.name
+                    task['title'] = t.Task.title
+                    if t.TaskScore is not None and t.TaskScore.score is not None:
+                        task['score'] = t.TaskScore.score
+                else:
+                    task['id'] = t.id
+                    task['name'] = t.name
+                    task['title'] = t.title
 
                 local.resp['tasks'].append(task)
 
