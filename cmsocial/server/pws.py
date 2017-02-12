@@ -935,7 +935,7 @@ class APIHandler(object):
                          .order_by(SocialTask.id)
             
             if local.participation is not None:
-                query = query.outerjoin(TaskScore).filter(or_(TaskScore.participation_id == None , TaskScore.participation_id == local.participation.id)).add_entity(TaskScore)
+                query = query.outerjoin(TaskScore, and_(TaskScore.participation_id == local.participation.id, Task.id == TaskScore.task_id)).add_entity(TaskScore)
                 if 'hideSolved' in local.data and local.data['hideSolved'] == True:
                     query = query.filter(or_(TaskScore.score == None , TaskScore.score != 100))
 
