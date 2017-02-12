@@ -35,7 +35,10 @@
           <a ui-sref="ranking.page({ pageNum: 1 })"><i class="fa fa-trophy fa-lg"></i> {{'Ranking' | l10n}}</a>
         </li>
         <li>
-          <a href="http://foros.oia.unsam.edu.ar"><i class="fa fa-comments fa-lg"></i> {{'Forum' | l10n}}</a>
+          <a href="http://foro.oia.unsam.edu.ar"><i class="fa fa-comments fa-lg"></i> {{'Forum' | l10n}}</a>
+        </li>
+        <li>
+          <a href="/#/faq"><i class="fa fa-question-circle fa-lg"></i> FAQ</a>
         </li>
         <li ng-class="{active: isActiveTab(5)}" ng-if="!me.isLogged()">
           <a ui-sref="signup"><i class="fa fa-pencil fa-lg"></i> {{'Sign up' | l10n}}</a>

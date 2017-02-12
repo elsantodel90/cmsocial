@@ -374,7 +374,7 @@ angular.module('cmsocial')
       it: 'Classifica',
       es: 'Ranking'
     },
-    'Forum': {es : 'Foros'},
+    'Forum': {es : 'Foro'},
 
     // User related
     'Sign up': {

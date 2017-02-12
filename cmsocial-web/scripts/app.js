@@ -39,6 +39,11 @@ angular
         templateUrl: 'views/homepage.html',
         controller: 'HomepageCtrl'
       })
+      .state('faq', {
+        url: '/faq',
+        templateUrl: 'views/faq.html',
+        controller: 'FAQCtrl'
+      })
       .state('sso', {
         url: '/sso',
         controller: 'SSOCtrl'
@@ -143,6 +148,11 @@ angular
       });
   })
   .controller('HomepageCtrl', function($scope, navbarManager, userManager, contestManager) {
+    $scope.me = userManager;
+    $scope.cm = contestManager;
+    navbarManager.setActiveTab(0);
+  })
+  .controller('FAQCtrl', function($scope, navbarManager, userManager, contestManager) {
     $scope.me = userManager;
     $scope.cm = contestManager;
     navbarManager.setActiveTab(0);
