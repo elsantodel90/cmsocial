@@ -38,7 +38,7 @@ angular.module('cmsocial')
         alert.animate({'right': '-260px'}, function() {
           $(this).remove();
         });
-      }, Math.round(1000 * secs));
+      }, Math.round(1000 * 2 * secs));
 
     };
 

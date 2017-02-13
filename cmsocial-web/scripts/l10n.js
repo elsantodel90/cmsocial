@@ -205,6 +205,9 @@ angular.module('cmsocial')
       it: 'Invia una sottoposizione',
       es: 'Enviar una solución'
     },
+    'Submission received!': {
+      es: '¡Envío recibido!'
+    },
     'Language:': {
       it: 'Linguaggio:',
       es: 'Lenguaje'

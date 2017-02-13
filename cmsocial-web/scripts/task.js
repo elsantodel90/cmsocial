@@ -279,8 +279,9 @@ angular.module('cmsocial')
             $("#submitform").each(function() {
               this.reset();
             });
+            notificationHub.createAlert('success', l10n.get('Submission received!'), 2);
           } else {
-            notificationHub.createAlert('danger', l10n.get(data['error']), 2);
+            notificationHub.createAlert('danger', l10n.get(data['error']), 3);
           }
           subsDatabase.submitCompleted = true; // stop loading
         })
