@@ -151,18 +151,21 @@ angular.module('cmsocial')
       "C": "c_cpp",
       "C++": "c_cpp",
       "Pascal": "pascal",
+      "Java": "java",
       "Python": "python"
     };
     var langExtMap = {
       "C": ".c",
       "C++": ".cpp",
       "Pascal": ".pas",
+      "Java": ".java",
       "Python": ".py"
     };
     var cmsLanguageMap = {
       "c": "C",
       "cpp": "C++",
       "pas": "Pascal",
+      "java": "Java",
       "py": "Python"
     };
     $scope.languages = [];
