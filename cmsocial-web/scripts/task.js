@@ -166,133 +166,141 @@ angular.module('cmsocial')
       "py": "Python"
     };
     $scope.languages = [];
-    for (var lang in contestManager.getContest().languages) {
-      $scope.languages.push(cmsLanguageMap[contestManager.getContest().languages[lang]]);
-    }
+    var submissionControllerFoo = function() {
+            if (!contestManager.hasContest())
+            {
+                setTimeout(submissionControllerFoo, 250);
+                return;
+            }
+            for (var lang in contestManager.getContest().languages) {
+              $scope.languages.push(cmsLanguageMap[contestManager.getContest().languages[lang]]);
+            }
 
-    var preferred_language_key = "preferred_language_" + contestManager.getContest().name;
+            var preferred_language_key = "preferred_language_" + contestManager.getContest().name;
 
-    if (!localStorage.getItem(preferred_language_key) ||
-      $scope.languages.indexOf(localStorage.getItem(preferred_language_key)) == -1) {
-      localStorage.setItem(preferred_language_key, $scope.languages[0]);
-    }
+            if (!localStorage.getItem(preferred_language_key) ||
+              $scope.languages.indexOf(localStorage.getItem(preferred_language_key)) == -1) {
+              localStorage.setItem(preferred_language_key, $scope.languages[0]);
+            }
 
-    $scope.language = localStorage.getItem(preferred_language_key);
-    $scope.aceOption = {
-      mode: aceModeMap[$scope.language],
-      showPrintMargin: false,
-      onLoad: function(_ace) {
-        $scope.aceSession = _ace.getSession();
-        $scope.languageChanged = function(newL) {
-          $scope.language = newL;
-          localStorage.setItem(preferred_language_key, newL);
-          $scope.aceSession.setMode("ace/mode/" + aceModeMap[newL]);
-        };
-      },
-      onChange: function(_ace) {
-        $scope.aceModel = $scope.aceSession.getDocument().getValue();
-        localStorage.setItem("source_code", $scope.aceModel);
-      }
+            $scope.language = localStorage.getItem(preferred_language_key);
+            $scope.aceOption = {
+              mode: aceModeMap[$scope.language],
+              showPrintMargin: false,
+              onLoad: function(_ace) {
+                $scope.aceSession = _ace.getSession();
+                $scope.languageChanged = function(newL) {
+                  $scope.language = newL;
+                  localStorage.setItem(preferred_language_key, newL);
+                  $scope.aceSession.setMode("ace/mode/" + aceModeMap[newL]);
+                };
+              },
+              onChange: function(_ace) {
+                $scope.aceModel = $scope.aceSession.getDocument().getValue();
+                localStorage.setItem("source_code", $scope.aceModel);
+              }
+            };
+
+            if (localStorage.getItem("source_code") === null) {
+              localStorage.setItem("source_code", l10n.get("Write your code here"));
+            }
+            $scope.aceModel = localStorage.getItem("source_code");
+
+            $scope.loadAce = function() {
+              if (!subsDatabase.submitCompleted) {
+                return notificationHub.createAlert('warning', 'You have a pending submission', 2);
+              }
+
+              $scope.files = {};
+              $scope.files[$rootScope.task.submission_format[0]] = {
+                'filename': "ace" + langExtMap[$scope.language],
+                'data': btoa(unescape(encodeURIComponent($scope.aceSession.getDocument().getValue())))
+                  // HACK above: http://stackoverflow.com/a/26603875/747654
+              };
+              $scope.submitFiles();
+            };
+
+            $scope.resetAce = function() {
+              localStorage.setItem("source_code", l10n.get("Write your code here"));
+              $scope.aceSession.getDocument().setValue(localStorage.getItem("source_code"));
+            };
+
+            $scope.loadFile = function(event) {
+              var reader = new FileReader();
+
+              reader.onload = function(e) {
+                $scope.aceSession.getDocument().setValue(e.target.result);
+              };
+
+              reader.readAsText(event.target.files[0]);
+            };
+
+            $scope.loadFiles = function(formid) {
+              var input = $("#" + formid + " input");
+              $scope.files = {};
+              var reader = new FileReader();
+
+              function readFile(i) {
+                if (i == input.length) {
+                  $scope.submitFiles();
+                  return;
+                }
+                if (input[i].files.length < 1) {
+                  readFile(i + 1);
+                  return;
+                }
+                reader.filename = input[i].files[0].name;
+                reader.inputname = input[i].name;
+                reader.onloadend = function() {
+                  $scope.files[reader.inputname] = {
+                    'filename': reader.filename,
+                    'data': reader.result
+                  };
+                  readFile(i + 1);
+                };
+                reader.readAsDataURL(input[i].files[0]);
+              }
+              readFile(0);
+            };
+
+            $scope.submitCompleted = function() {
+              return subsDatabase.submitCompleted;
+            };
+
+            $scope.submitFiles = function() {
+              var data = {};
+              data['files'] = $scope.files;
+              data['action'] = 'new';
+              data['task_name'] = $scope.taskName;
+              delete $scope.files;
+
+              subsDatabase.submitCompleted = false; // start loading
+
+              $http.post(API_PREFIX + 'submission',
+                  data
+                )
+                .success(function(data, status, headers, config) {
+                  if (data['success']) {
+                    subsDatabase.addSub($scope.taskName, data);
+                    $("#submitform").each(function() {
+                      this.reset();
+                    });
+                    notificationHub.createAlert('success', l10n.get('Submission received!'), 2);
+                  } else {
+                    notificationHub.createAlert('danger', l10n.get(data['error']), 3);
+                  }
+                  subsDatabase.submitCompleted = true; // stop loading
+                })
+                .error(function(data, status, headers, config) {
+                  notificationHub.serverError(status);
+                  subsDatabase.submitCompleted = true; // stop loading
+                });
+            };
+            $scope.showDetails = function(id) {
+              subsDatabase.subDetails(id);
+            };
     };
-
-    if (localStorage.getItem("source_code") === null) {
-      localStorage.setItem("source_code", l10n.get("Write your code here"));
-    }
-    $scope.aceModel = localStorage.getItem("source_code");
-
-    $scope.loadAce = function() {
-      if (!subsDatabase.submitCompleted) {
-        return notificationHub.createAlert('warning', 'You have a pending submission', 2);
-      }
-
-      $scope.files = {};
-      $scope.files[$rootScope.task.submission_format[0]] = {
-        'filename': "ace" + langExtMap[$scope.language],
-        'data': btoa(unescape(encodeURIComponent($scope.aceSession.getDocument().getValue())))
-          // HACK above: http://stackoverflow.com/a/26603875/747654
-      };
-      $scope.submitFiles();
-    };
-
-    $scope.resetAce = function() {
-      localStorage.setItem("source_code", l10n.get("Write your code here"));
-      $scope.aceSession.getDocument().setValue(localStorage.getItem("source_code"));
-    };
-
-    $scope.loadFile = function(event) {
-      var reader = new FileReader();
-
-      reader.onload = function(e) {
-        $scope.aceSession.getDocument().setValue(e.target.result);
-      };
-
-      reader.readAsText(event.target.files[0]);
-    };
-
-    $scope.loadFiles = function(formid) {
-      var input = $("#" + formid + " input");
-      $scope.files = {};
-      var reader = new FileReader();
-
-      function readFile(i) {
-        if (i == input.length) {
-          $scope.submitFiles();
-          return;
-        }
-        if (input[i].files.length < 1) {
-          readFile(i + 1);
-          return;
-        }
-        reader.filename = input[i].files[0].name;
-        reader.inputname = input[i].name;
-        reader.onloadend = function() {
-          $scope.files[reader.inputname] = {
-            'filename': reader.filename,
-            'data': reader.result
-          };
-          readFile(i + 1);
-        };
-        reader.readAsDataURL(input[i].files[0]);
-      }
-      readFile(0);
-    };
-
-    $scope.submitCompleted = function() {
-      return subsDatabase.submitCompleted;
-    };
-
-    $scope.submitFiles = function() {
-      var data = {};
-      data['files'] = $scope.files;
-      data['action'] = 'new';
-      data['task_name'] = $scope.taskName;
-      delete $scope.files;
-
-      subsDatabase.submitCompleted = false; // start loading
-
-      $http.post(API_PREFIX + 'submission',
-          data
-        )
-        .success(function(data, status, headers, config) {
-          if (data['success']) {
-            subsDatabase.addSub($scope.taskName, data);
-            $("#submitform").each(function() {
-              this.reset();
-            });
-            notificationHub.createAlert('success', l10n.get('Submission received!'), 2);
-          } else {
-            notificationHub.createAlert('danger', l10n.get(data['error']), 3);
-          }
-          subsDatabase.submitCompleted = true; // stop loading
-        })
-        .error(function(data, status, headers, config) {
-          notificationHub.serverError(status);
-          subsDatabase.submitCompleted = true; // stop loading
-        });
-    };
-    $scope.showDetails = function(id) {
-      subsDatabase.subDetails(id);
-    };
+    submissionControllerFoo();
   })
   .directive('pdf', function($window, l10n, API_PREFIX) {
     return {
