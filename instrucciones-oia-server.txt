@@ -106,8 +106,9 @@ cmsAddAdmin -p pass user
 		certamen:CIIC
 		certamen:IOI
 
+--> Taking advantage of the fact that we do not use tokens at all, the parameter "Maximum number of tokens" of a task is magically reinterpreted as "task point value" (for ranking). Ugly hack, but works fine.
 
-
+--> If java is to be allowed, then "sudo aptitude install gcj-jdk"
 
 
 ######################################################################
