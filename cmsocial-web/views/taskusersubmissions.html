@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">{{'Submissions of user' | l10n}} {{userId}} {{'for problem' | l10n}} {{taskName}}</h3>
+      <h3 class="panel-title">{{'Submissions of user' | l10n}} <a style="color:blue;font-weight:bold;" ui-sref="user({ userId: userId })">{{userId}}</a> {{'for problem' | l10n}} <a style="color:blue;font-weight:bold;" ui-sref="task.statement({taskName: taskName})">{{taskName}}</a></h3>
   </div>
   <table class="submissions table table-bordered table-striped">
     <tr ng-show="areThereSubs(taskName)">
