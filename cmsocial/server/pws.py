@@ -1271,10 +1271,18 @@ class APIHandler(object):
                 .filter(Task.name == local.data['task_name']).first()
             if task is None:
                 return 'Not found'
-            if local.user is None:
-                return 'Unauthorized'
+            
+            if 'username' in local.data:
+                participation = self.get_participation(local.contest, local.data['username'])
+                if participation is None:
+                    return 'Not found'
+            else:
+                if local.user is None:
+                    return 'Unauthorized'
+                participation = local.participation
+                
             subs = local.session.query(Submission)\
-                .filter(Submission.participation_id == local.participation.id)\
+                .filter(Submission.participation_id == participation.id)\
                 .filter(Submission.task_id == task.id)\
                 .order_by(desc(Submission.timestamp)).all()
             submissions = []
