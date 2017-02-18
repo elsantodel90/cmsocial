@@ -1,0 +1,34 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{'Submissions of user' | l10n}} {{userId}} {{'for problem' | l10n}} {{taskName}}</h3>
+  </div>
+  <table class="submissions table table-bordered table-striped">
+    <tr ng-show="areThereSubs(taskName)">
+      <th class="col-xs-1">{{'ID' | l10n}}</th>
+      <th class="col-xs-4">{{'Time and date' | l10n}}</th>
+      <th class="col-xs-5">{{'Status' | l10n}}</th>
+      <th class="col-xs-2">{{'File(s)' | l10n}}</th>
+    </tr>
+    <tr ng-hide="areThereSubs(taskName)">
+      <td colspan="4" class="no-submissions">{{'no submissions' | l10n}}</td>
+    </tr>
+    <tr class="submission" ng-repeat="sub in userSubmissions">
+      <td>{{sub.id}}</td>
+      <td>{{sub.time}}</td>
+      <td class="{{sub.cl}}">{{sub.status | l10n}}</td>
+      <td class="files">
+        <div class="btn-group">
+          <a class="dropdown-toggle" data-toggle="dropdown">
+            {{'Download' | l10n}}
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="file in sub.files">
+              <a href="api/files/{{file['digest']}}/{{file['name']}}">{{file['name']}}</a>
+            </li>
+          </ul>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

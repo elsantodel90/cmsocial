@@ -44,6 +44,11 @@ angular
         templateUrl: 'views/faq.html',
         controller: 'FAQCtrl'
       })
+      .state('taskusersubmissions', {
+        url: '/task/{taskName}/user/{userId}/submissions',
+        templateUrl: 'views/taskusersubmissions.html',
+        controller: 'TaskUserSubmissionsCtrl'
+      })
       .state('sso', {
         url: '/sso',
         controller: 'SSOCtrl'

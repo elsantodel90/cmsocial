@@ -200,6 +200,15 @@ angular.module('cmsocial')
       es: 'La etiqueta ha sido correctamente removida del problema'
     },
 
+    // TaskUserSubmissions page
+    'Submissions of user': {
+        es : 'Envíos del usuario'
+    },
+    'for problem': {
+        es : 'para el problema'
+    },
+    
+
     // Submissions page
     'Submit a solution': {
       it: 'Invia una sottoposizione',
