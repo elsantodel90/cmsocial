@@ -362,6 +362,9 @@ angular.module('cmsocial')
       it: 'Archivio problemi e quiz',
       es: 'Archivo de enunciados'
     },
+    'Beginner tasks': {
+      es: 'Problemas para principiantes'
+    },
     'All tasks': {
       it: 'Tutti i problemi',
       es: 'Todos los problemas'
