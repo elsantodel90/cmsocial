@@ -228,7 +228,7 @@ angular.module('cmsocial')
           notificationHub.serverError(status);
         });
     };
-    $scope.nationalContests = ["NacionalNivel1","NacionalNivel2","NacionalNivel3","Selectivo"];
+    $scope.nationalContests = ["ProvincialNivel2", "ProvincialNivel3","NacionalNivel1","NacionalNivel2","NacionalNivel3","Selectivo"];
     $scope.getYears();
   })
   .controller('HelpCtrl', function($scope, $stateParams, $http,

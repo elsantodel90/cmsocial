@@ -17,7 +17,7 @@
             Año {{year}}:
           </a></td>
           <td ng-repeat="contest in nationalContests">
-          <a ui-sref="tasklist.page({tag: 'año:' + year + ',certamen:' + contest, pageNum: 1})" class="label btn-info">
+          <a ng-if="year >= '2017' || !(contest.substr(0,10) == 'Provincial') " ui-sref="tasklist.page({tag: 'año:' + year + ',certamen:' + contest, pageNum: 1})" class="label btn-info">
             <i class="fa fa-tag"></i>
             {{contest}}
           </a>
