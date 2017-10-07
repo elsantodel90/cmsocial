@@ -932,7 +932,7 @@ class APIHandler(object):
                          .join(SocialTask)\
                          .filter(Task.contest_id == local.contest.id)\
                          .filter(SocialTask.access_level >= local.access_level)\
-                         .order_by(SocialTask.id)
+                         .order_by(Task.token_max_number)
             
             if local.participation is not None:
                 query = query.outerjoin(TaskScore, and_(TaskScore.participation_id == local.participation.id, Task.id == TaskScore.task_id)).add_entity(TaskScore)
@@ -960,7 +960,7 @@ class APIHandler(object):
 
             for t in tasks:
                 task = dict()
-
+                task['total_point_value'] = t.Task.token_max_number
                 if local.participation is not None:
                     task['id'] = t.Task.id
                     task['name'] = t.Task.name
