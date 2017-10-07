@@ -960,11 +960,11 @@ class APIHandler(object):
 
             for t in tasks:
                 task = dict()
-                task['total_point_value'] = t.Task.token_max_number
                 if local.participation is not None:
                     task['id'] = t.Task.id
                     task['name'] = t.Task.name
                     task['title'] = t.Task.title
+                    task['total_point_value'] = t.Task.token_max_number
                     if t.TaskScore is not None and t.TaskScore.score is not None:
                         task['score'] = t.TaskScore.score
                         task['actual_point_score'] = (task['score'] * task['total_point_value']) // 100
