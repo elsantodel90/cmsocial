@@ -967,6 +967,7 @@ class APIHandler(object):
                     task['title'] = t.Task.title
                     if t.TaskScore is not None and t.TaskScore.score is not None:
                         task['score'] = t.TaskScore.score
+                        task['actual_point_score'] = (task['score'] * task['total_point_value']) // 100
                 else:
                     task['id'] = t.id
                     task['name'] = t.name
