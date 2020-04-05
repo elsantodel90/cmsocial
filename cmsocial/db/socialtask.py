@@ -18,8 +18,9 @@ from sqlalchemy.orm import backref, relationship
 from sqlalchemy.ext.orderinglist import ordering_list
 
 from cms.db import Task, Participation
-from cms.db.smartmappedcollection import smart_mapped_collection
-from cms import SCORE_MODE_MAX, SCORE_MODE_MAX_TOKENED_LAST
+# Comente estas dos lineas pq no se que hacen y con ellas salta un error
+# from cms.db.smartmappedcollection import smart_mapped_collection
+# from cms import SCORE_MODE_MAX, SCORE_MODE_MAX_TOKENED_LAST
 
 from cmsocial.db.base import Base
 

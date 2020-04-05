@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import argparse
-import ConfigParser
+import configparser
 import hashlib
 import hmac
 import io
@@ -28,7 +28,7 @@ import pkg_resources
 import requests
 from gevent import monkey
 from gevent.subprocess import check_output, CalledProcessError, STDOUT
-from sqlalchemy import desc
+from sqlalchemy import desc, func
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.sql import and_, or_
 from werkzeug.exceptions import (BadRequest, HTTPException,
@@ -38,9 +38,9 @@ from werkzeug.wrappers import Request, Response
 from werkzeug.wsgi import SharedDataMiddleware, responder, wrap_file
 
 import jwt
-from cms import SOURCE_EXT_TO_LANGUAGE_MAP, ServiceCoord
+from cms import ServiceCoord
 from cms.db import (Contest, File, Participation, SessionGen, Submission, Task,
-                    Testcase, User)
+                    Testcase, User, SubmissionResult)
 from cms.db.filecacher import FileCacher
 from cms.io import Service
 from cmscommon.archive import Archive
@@ -54,13 +54,38 @@ from cmsocial.db.test import Test, TestScore
 
 
 
+# Shorthand codes for all supported languages.
+LANG_CPP = "cpp"
+LANG_PYTHON = "py"
+LANG_JAVA = "java"
+LANG_HS = "hs"
+
+# Our preferred source file and header file extension for each language.
+LANGUAGE_TO_SOURCE_EXT_MAP = {
+    LANG_CPP: ".cpp",
+    LANG_PYTHON: ".py",
+    LANG_JAVA: ".java",
+    LANG_HS: ".hs",
+}
+
+SOURCE_EXT_TO_LANGUAGE_MAP = {
+    ".cpp": LANG_CPP,
+    ".py": LANG_PYTHON,
+    ".java": LANG_JAVA,
+    ".hs": LANG_HS,
+}
+
+SOURCE_EXT_TO_LANGUAGE_MAP_CMS = {
+    ".cpp": "C++11 / g++",
+    ".java": "Java / JDK",
+}
 monkey.patch_all()
 
 
 logger = logging.getLogger(__name__)
 local = gevent.local.local()
 
-config = ConfigParser.SafeConfigParser()
+config = configparser.SafeConfigParser()
 config.read('/usr/local/etc/cmsocial.ini')
 
 
@@ -317,7 +342,7 @@ class APIHandler(object):
         if string is None:
             string = ''
         sha = getattr(hashlib, algo)()
-        sha.update(string)
+        sha.update(string.encode('utf-8'))
         return sha.hexdigest()
 
     def old_hashpw(self, pw):
@@ -329,14 +354,20 @@ class APIHandler(object):
     def hashpw(self, pw):
         pw = pw.encode('utf-8')
         payload = bcrypt.hashpw(pw, bcrypt.gensalt())
-        return "bcrypt:%s" % payload
+        return "bcrypt:%s" % payload.decode('utf-8')
 
     def validate(self, pw, storedpw):
         if not storedpw.startswith("bcrypt:"):
             return False
         payload = storedpw.split(":", 1)[1].encode("utf-8")
         pw = pw.encode("utf-8")
-        return bcrypt.hashpw(pw, payload) == payload
+        try:
+            return bcrypt.hashpw(pw, payload) == payload
+        except ValueError as e:
+            logger.warning(pw)
+            logger.warning(payload)
+            logger.warning(e)
+            return False
 
     def gencode(self):
         from string import ascii_lowercase, ascii_uppercase, digits
@@ -423,21 +454,27 @@ class APIHandler(object):
         if 'name' in args:
             if args["name"].endswith(".pdf"):
                 # Add header to allow the official pdf.js to work
-                response.headers.add_header(b'Access-Control-Allow-Origin',
-                                            b'https://mozilla.github.io')
+                response.headers.add_header('Access-Control-Allow-Origin',
+                                            'https://mozilla.github.io')
             else:
                 # Don't do this on pdf files because it breaks the native pdf
                 # reader
+                name = args['name'].encode('utf-8')
                 response.headers.add_header(
-                    b'Content-Disposition', b'attachment',
-                    filename=args['name'])
+                    'Content-Disposition', 'attachment',
+                    filename=name)
             mimetype = mimetypes.guess_type(args['name'])[0]
             if mimetype is not None:
                 response.mimetype = mimetype
 
-        response.response = wrap_file(environ, fobj)
+        # logger.info(fobj.read(100))
+        # fil = fobj.read()
         response.direct_passthrough = True
-        response.cache_control.max_age = 31536000
+        response.response = wrap_file(environ, fobj)
+        # response.response = fil
+        logger.info("Internal Server Error")
+        # response.cache_control.max_age = 31536000
+        response.cache_control.max_age = 1000
         response.cache_control.public = True
         return response
 
@@ -825,7 +862,8 @@ class APIHandler(object):
                 return 'Bad Request'
             local.resp['name'] = local.contest.name
             local.resp['description'] = local.contest.description
-            local.resp['languages'] = local.contest.languages
+            # local.resp['languages'] = local.contest.languages
+            local.resp['languages'] = ['cpp', 'java']
             local.resp['participates'] = local.participation is not None
             local.resp[
                 'top_left_name'] = local.contest.social_contest.top_left_name
@@ -960,18 +998,15 @@ class APIHandler(object):
 
             for t in tasks:
                 task = dict()
+                task['id'] = t.id
+                task['name'] = t.name
+                task['title'] = t.title
                 if local.participation is not None:
-                    task['id'] = t.Task.id
-                    task['name'] = t.Task.name
-                    task['title'] = t.Task.title
-                    task['total_point_value'] = t.Task.token_max_number
-                    if t.TaskScore is not None and t.TaskScore.score is not None:
-                        task['score'] = t.TaskScore.score
-                        task['actual_point_score'] = (task['score'] * task['total_point_value']) // 100
-                else:
-                    task['id'] = t.id
-                    task['name'] = t.name
-                    task['title'] = t.title
+                    logger.info(t.max_score)
+                    task['total_point_value'] = t.token_max_number
+                    # if t.SubmissionResult is not None and t.SubmissionResult.score is not None:
+                    task['score'] = t.max_score
+                    task['actual_point_score'] = (task['score'] * task['total_point_value']) // 100
 
                 local.resp['tasks'].append(task)
 
@@ -988,13 +1023,13 @@ class APIHandler(object):
             local.resp['title'] = t.title
             local.resp['help_available'] = t.social_task.help_available
             local.resp['statements'] =\
-                dict([(l, s.digest) for l, s in t.statements.iteritems()])
-            local.resp['submission_format'] =\
-                [sfe.filename for sfe in t.submission_format]
+                dict([(l, s.digest) for l, s in t.statements.items()])
+            local.resp['submission_format'] = t.submission_format
+            # [sfe.filename for sfe in t.submission_format]
             for i in ['time_limit', 'memory_limit', 'task_type']:
                 local.resp[i] = getattr(t.active_dataset, i)
             att = []
-            for (name, obj) in t.attachments.iteritems():
+            for (name, obj) in t.attachments.items():
                 att.append((name, obj.digest))
             local.resp['attachments'] = att
             local.resp['tags'] = []
@@ -1293,7 +1328,7 @@ class APIHandler(object):
                 submission['task_id'] = s.task_id
                 submission['timestamp'] = make_timestamp(s.timestamp)
                 submission['files'] = []
-                for name, f in s.files.iteritems():
+                for name, f in s.files.items():
                     fi = dict()
                     if s.language is None:
                         fi['name'] = name
@@ -1321,7 +1356,7 @@ class APIHandler(object):
             submission['timestamp'] = make_timestamp(s.timestamp)
             submission['language'] = s.language
             submission['files'] = []
-            for name, f in s.files.iteritems():
+            for name, f in s.files.items():
                 fi = dict()
                 if s.language is None:
                     fi['name'] = name
@@ -1337,7 +1372,7 @@ class APIHandler(object):
             if result is not None and result.score is not None:
                 submission['score'] = round(result.score, 2)
             if result is not None and result.score_details is not None:
-                tmp = json.loads(result.score_details)
+                tmp = result.score_details
                 if len(tmp) > 0 and 'text' in tmp[0]:
                     subt = dict()
                     subt['testcases'] = tmp
@@ -1348,7 +1383,7 @@ class APIHandler(object):
                     submission['score_details'] = tmp
                 for subtask in submission['score_details']:
                     for testcase in subtask['testcases']:
-                        data = json.loads(testcase['text'])
+                        data = testcase['text']
                         testcase['text'] = data[0].replace('%d','%s') % tuple(data[1:])
             else:
                 submission['score_details'] = None
@@ -1400,7 +1435,7 @@ class APIHandler(object):
             else:
                 files_sent = \
                     dict([(k, self.decode_file(v))
-                          for k, v in local.data['files'].iteritems()])
+                          for k, v in local.data['files'].items()])
 
             # TODO: implement partial submissions (?)
 
@@ -1408,16 +1443,16 @@ class APIHandler(object):
             files = []
             sub_lang = None
             for sfe in task.submission_format:
-                f = files_sent.get(sfe.filename)
+                f = files_sent.get(sfe)
                 if f is None:
                     return 'Some files are missing!'
-                if len(f['body']) > config.get("core", "max_submission_length"):
+                if len(f['body']) > int(config.get("core", "max_submission_length")):
                     return 'The files you sent are too big!'
-                f['name'] = sfe.filename
+                f['name'] = sfe
                 files.append(f)
-                if sfe.filename.endswith('.%l'):
+                if sfe.endswith('.%l'):
                     language = None
-                    for ext, l in SOURCE_EXT_TO_LANGUAGE_MAP.iteritems():
+                    for ext, l in SOURCE_EXT_TO_LANGUAGE_MAP_CMS.items():
                         if f['filename'].endswith(ext):
                             language = l
                     if language is None:
@@ -1459,7 +1494,7 @@ class APIHandler(object):
             local.resp['evaluation_outcome'] = None
             local.resp['score'] = None
             local.resp['files'] = []
-            for name, f in submission.files.iteritems():
+            for name, f in submission.files.items():
                 fi = dict()
                 if submission.language is None:
                     fi['name'] = name
